@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# ArgoNext - Fullstack Web Application
 
-First, run the development server:
+A modern fullstack web application built with Next.js 15, React 19, and SQLite.
 
-```bash
+## Features
+
+- Next.js 15 for server-side rendering and API routes
+- React 19 with TypeScript support
+- SQLite database with Knex query builder
+- Authentication using JWT and bcrypt
+- File upload capabilities with Multer
+- Modern UI components with Tailwind CSS
+- Charts and data visualization using Recharts
+- Icons from Lucide React and React Icons
+- Date handling with date-fns and dayjs
+- Toast notifications with react-hot-toast
+
+## Prerequisites
+
+- Node.js (LTS version recommended)
+- npm or yarn package manager
+
+## Installation
+
+1. Clone the repository:
+
+git clone https://github.com/yourusername/argonext.git
+cd argonext
+
+
+2. Install dependencies:
+
+npm install
+# or
+yarn install
+
+
+3. Run the development server:
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+- `npm run dev` - Start development server
+- `npm run build` - Build production application
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint for code linting
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+argonext/
+├── components/       # React components
+├── pages/           # Next.js pages and API routes
+├── public/          # Static files
+├── styles/          # CSS styles
+├── lib/             # Utility functions
+├── types/           # TypeScript type definitions
+└── database/        # Database configurations
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Frontend
+- React 19
+- Next.js 15
+- TypeScript
+- Tailwind CSS
+- Recharts
+- Lucide React
+- React Icons
+- React Hot Toast
+
+### Backend
+- Next.js API Routes
+- Better SQLite3
+- Knex Query Builder
+- JWT Authentication
+- Bcrypt
+- Multer
+
+### Development Tools
+- TypeScript
+- ESLint
+- PostCSS
+- Tailwind CSS
+
+## License
+
+This project is private and not available for public use.
+
+## Author
+
+Your Name
+
+## Version
+
+Current version: 0.1.0

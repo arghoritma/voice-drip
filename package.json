@@ -1,5 +1,5 @@
 {
-  "name": "drip-task",
+  "name": "argonext",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@azure/app-configuration": "^1.8.0",
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^11.7.0",
     "date-fns": "^4.1.0",
