@@ -56,6 +56,7 @@ yarn dev
 
 ## Project Structure
 
+```
 argonext/
 ├── .git/              # Directory for Git version control
 ├── app/               # React components
@@ -79,6 +80,7 @@ argonext/
 ├── README.md          # Project documentation or description
 ├── tailwind.config.ts # Tailwind CSS configuration
 └── tsconfig.json      # TypeScript configuration file
+```
 
 ## Technologies Used
 
