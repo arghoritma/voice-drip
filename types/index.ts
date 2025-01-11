@@ -9,55 +9,9 @@ export interface User {
   updated_at?: string;
 }
 
-export interface Team {
-  id: string;
-  name: string;
-  description?: string;
-  created_at: string;
-  updated_at?: string;
-}
-
-export interface TeamMember {
-  id: string;
-  user_id: string;
-  team_id: string;
-  joined_at: string;
-}
-
-export interface Project {
-  id: string;
-  team_id: string;
-  name: string;
-  description?: string;
-  deadline?: string;
-  created_at: string;
-  updated_at?: string;
-}
-
-export interface Task {
-  id: string;
-  project_id: string;
-  title: string;
-  description?: string;
-  assigned_to?: string;
-  status?: string;
-  priority?: string;
-  due_date?: string;
-  created_at: string;
-  updated_at?: string;
-}
-
-export interface Comment {
-  id: string;
-  task_id: string;
-  user_id: string;
-  content?: string;
-  created_at: string;
-}
 
 export interface File {
   id: string;
-  task_id: string;
   file_name: string;
   file_url: string;
   uploaded_by: string;
@@ -102,20 +56,6 @@ export interface Category {
   user_id: string;
 }
 
-export interface Division {
-  id: number;
-  name: string;
-  description?: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface UserDivision {
-  id: number;
-  user_id: string;
-  division_id: number;
-  assigned_at: string;
-}
 
 export type RepeatPattern =
   | "never"
