@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Next.js PWA',
-    short_name: 'NextPWA',
-    description: 'A Progressive Web App built with Next.js',
+    name: 'Argonext',
+    short_name: 'Argonext',
+    description: 'ArgoNext is a modern template for fullstack web application development using Next.js, React, and SQLite. The template is flexible and supports changing the database driver to MySQL, PostgreSQL, and others.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

@@ -14,7 +14,10 @@ export default function Home() {
           className="mb-4"
         />
         <h1 className="text-4xl font-bold">ArgoNext</h1>
-        <p className="text-xl">A modern fullstack web application built with Next.js 15, React 19, and SQLite.</p>
+        <p className="text-xl">
+          A modern fullstack web application built with Next.js 15, React 19,
+          and SQLite.
+        </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
           <div className="p-6 border rounded-lg">
@@ -50,12 +53,12 @@ export default function Home() {
           </a>
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="/demo"
+            href="/dashboard"
           >
             <PlayCircle size={20} />
             Try Demo
-          </a>        
-          </div>
+          </a>
+        </div>
       </main>
       <Footer />
     </div>

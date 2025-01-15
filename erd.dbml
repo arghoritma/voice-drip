@@ -54,3 +54,16 @@ Table categories {
   updated_at datetime [default: `CURRENT_TIMESTAMP`]
   user_id varchar [not null, ref: > users.id]
 }
+
+Table sessions {
+  id varchar [pk] 
+  user_id varchar [not null, ref: > users.id] 
+  token varchar [not null] 
+  device varchar 
+  ip_address varchar 
+  user_agent text 
+  is_active boolean [default: true] 
+  created_at datetime [default: `CURRENT_TIMESTAMP`] 
+  last_accessed datetime [default: `CURRENT_TIMESTAMP`] 
+  expires_at datetime [not null] 
+}
