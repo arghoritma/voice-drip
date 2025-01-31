@@ -3,10 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   webpack: (config) => {
     // Mengatasi warning dari Knex
-    config.ignoreWarnings = [
-      { module: /node_modules\/knex/ }
-    ];
-    
+    config.ignoreWarnings = [{ module: /node_modules\/knex/ }];
+
     // Mengatasi masalah fallback dependencies
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -19,7 +17,7 @@ const nextConfig: NextConfig = {
       sqlite3: false,
       tedious: false,
     };
-    
+
     return config;
   },
 };

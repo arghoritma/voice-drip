@@ -1,27 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
-
-import { Eye, EyeOff, Mail, User, LogIn, AlertCircle } from "lucide-react";
+import React, { useActionState, useState } from "react";
+import { Eye, EyeOff, Mail, User, LogIn } from "lucide-react";
+import { signup } from "@/actions/auth";
+import { useFormState } from "react-dom";
+import { FormState } from "@/lib/definitions";
 
 export default function RegisterForm() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  const initialState: FormState = {
+    success: false,
+    errors: {},
+  };
 
+  const [state, formAction] = useFormState(signup, initialState);
   return (
-    <form className="mt-8 space-y-6">
-      {error && (
-        <div className="flex items-center p-4 text-red-800 rounded-lg bg-red-50">
-          <AlertCircle className="w-5 h-5 mr-2" />
-          <p>{error}</p>
-        </div>
-      )}
-
+    <form className="mt-8 space-y-6 " action={formAction}>
       <div className="space-y-4">
+        <div>
+          <label htmlFor="username" className="block text-sm font-medium mb-1">
+            Name
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <User className="h-5 w-5" />
+            </div>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              placeholder="johndoe"
+              required
+            />
+          </div>
+        </div>
+
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
             Email Address
@@ -32,31 +47,10 @@ export default function RegisterForm() {
             </div>
             <input
               id="email"
+              name="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
               placeholder="you@example.com"
-              required
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="username" className="block text-sm font-medium mb-1">
-            Username
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5" />
-            </div>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
-              placeholder="johndoe"
               required
             />
           </div>
@@ -72,6 +66,7 @@ export default function RegisterForm() {
             </div>
             <input
               id="password"
+              name="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -93,39 +88,12 @@ export default function RegisterForm() {
           </div>
         </div>
       </div>
-
       <div>
         <button
           type="submit"
-          disabled={loading}
-          className={`w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] ${
-            loading ? "opacity-75 cursor-not-allowed" : ""
-          }`}
+          className="w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc]"
         >
-          {loading ? (
-            <svg
-              className="animate-spin h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          ) : (
-            "Sign Up"
-          )}
+          Sign Up
         </button>
       </div>
     </form>

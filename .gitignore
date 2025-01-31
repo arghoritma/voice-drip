@@ -46,3 +46,7 @@ next-env.d.ts
 
 # firebase admin key
 /key
+
+
+# firebase config
+@services/firebaseConfig.ts
