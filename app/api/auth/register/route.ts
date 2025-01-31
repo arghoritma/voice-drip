@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
-import db from "@/config/db";
+import db from "@/services/db";
 
 export async function POST(request: Request) {
   try {

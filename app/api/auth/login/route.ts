@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import db from "@/config/db";
+import db from "@/services/db";
 import { encrypt } from "@/lib/auth";
 import { generateUUID } from "@/lib/helper";
 

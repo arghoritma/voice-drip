@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import db from "@/config/db";
+import db from "@/services/db";
 import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
