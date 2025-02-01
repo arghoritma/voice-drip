@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import RegisterForm from "@/components/ui/RegisterForm";
-import GoogleLogin from "@/components/ui/GoogleLogin";
+import RegisterForm from "@/components/RegisterForm";
+import GoogleLogin from "@/components/GoogleLogin";
 
 export default function Register() {
   return (

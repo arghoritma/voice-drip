@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useActionState, useState } from "react";
-import { Eye, EyeOff, Mail, User, LogIn } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Mail, User, LogIn } from "lucide-react";
 import { signup } from "@/actions/auth";
-import { useFormState } from "react-dom";
 import { FormState } from "@/lib/definitions";
 
 export default function RegisterForm() {
@@ -14,9 +13,18 @@ export default function RegisterForm() {
     errors: {},
   };
 
-  const [state, formAction] = useFormState(signup, initialState);
+  const [state, actionRegister, isPending] = useActionState(
+    signup,
+    initialState
+  );
   return (
-    <form className="mt-8 space-y-6 " action={formAction}>
+    <form className="mt-8 space-y-6 " action={actionRegister}>
+      {state.errors?._form && (
+        <div role="alert" className="alert alert-error">
+          <AlertCircle className="h-5 w-5" />
+          {state.errors._form}
+        </div>
+      )}
       <div className="space-y-4">
         <div>
           <label htmlFor="username" className="block text-sm font-medium mb-1">
@@ -35,6 +43,9 @@ export default function RegisterForm() {
               required
             />
           </div>
+          {state.errors?.name && (
+            <div className="text-error text-sm ">{state.errors.name}</div>
+          )}
         </div>
 
         <div>
@@ -54,6 +65,9 @@ export default function RegisterForm() {
               required
             />
           </div>
+          {state.errors?.email && (
+            <div className="text-error text-sm ">{state.errors.email}</div>
+          )}
         </div>
 
         <div>
@@ -86,14 +100,25 @@ export default function RegisterForm() {
               )}
             </button>
           </div>
+          {state.errors?.password && (
+            <div className="text-error text-sm">{state.errors.password}</div>
+          )}
         </div>
       </div>
       <div>
         <button
           type="submit"
-          className="w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          disabled={isPending}
+          className="w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Sign Up
+          {isPending ? (
+            <>
+              <span className="h-5 w-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
+              Processing...
+            </>
+          ) : (
+            "Sign Up"
+          )}
         </button>
       </div>
     </form>

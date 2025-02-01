@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "@/components/ui/LoginForm";
-import GoogleLogin from "@/components/ui/GoogleLogin";
+import LoginForm from "@/components/LoginForm";
+import GoogleLogin from "@/components/GoogleLogin";
 
 export default function Login() {
   return (

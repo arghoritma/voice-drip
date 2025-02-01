@@ -70,3 +70,35 @@ export async function POST(request: Request) {
     );
   }
 }
+
+/**
+ * @route POST /api/auth/register
+ * @desc Register new user
+ * @access Public
+ * @example
+ * POST /api/auth/register
+ * {
+ *   "email": "user@example.com",
+ *   "username": "johndoe",
+ *   "password": "password123",
+ *   "phone_number": "081234567890"
+ * }
+ *
+ * @returns
+ * Success Response (201):
+ * {
+ *   "message": "Registrasi berhasil",
+ *   "user": {
+ *     "id": "uuid-string",
+ *     "email": "user@example.com",
+ *     "username": "johndoe",
+ *     "role": "user",
+ *     "created_at": "2023-01-01T00:00:00Z"
+ *   }
+ * }
+ *
+ * Error Responses:
+ * (400) - {"message": "Email sudah terdaftar"}
+ * (400) - {"message": "Nomor HP sudah terdaftar"}
+ * (500) - {"message": "Terjadi kesalahan pada server"}
+ */
