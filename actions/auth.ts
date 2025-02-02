@@ -4,6 +4,7 @@ import { SignupFormSchema, FormState } from "@/lib/definitions";
 import { generateUUID } from "@/lib/helper";
 import db from "@/services/db";
 import bcrypt from "bcrypt";
+import { deleteSession } from "@/lib/session";
 
 export async function signup(
   prev: FormState,
@@ -141,4 +142,8 @@ export async function signin(
       },
     };
   }
+}
+
+export async function logout() {
+  deleteSession();
 }

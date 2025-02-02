@@ -27,3 +27,8 @@ export type FormState = {
   success?: boolean;
   message?: string;
 };
+
+export type SessionPayload = {
+  userId: string;
+  expiresAt: Date;
+};
