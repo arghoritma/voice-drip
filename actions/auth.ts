@@ -4,7 +4,8 @@ import { SignupFormSchema, FormState } from "@/lib/definitions";
 import { generateUUID } from "@/lib/helper";
 import db from "@/services/db";
 import bcrypt from "bcrypt";
-import { deleteSession } from "@/lib/session";
+import { createSession, deleteSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export async function signup(
   prev: FormState,
@@ -55,10 +56,8 @@ export async function signup(
       });
     });
 
-    return {
-      success: true,
-      message: "Account created successfully! You can now log in.",
-    };
+    await createSession(userId);
+    redirect("/dashboard");
   } catch (error) {
     if (error instanceof Error) {
       if (
@@ -131,10 +130,8 @@ export async function signin(
       };
     }
 
-    return {
-      success: true,
-      message: "Signed in successfully!",
-    };
+    await createSession(user.id);
+    redirect("/dashboard");
   } catch (error) {
     return {
       errors: {
@@ -146,4 +143,5 @@ export async function signin(
 
 export async function logout() {
   deleteSession();
+  redirect("/auth/login");
 }

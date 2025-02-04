@@ -19,7 +19,7 @@ export default function RegisterForm() {
   );
   return (
     <form className="mt-8 space-y-6 " action={actionRegister}>
-      {state.errors?._form && (
+      {state?.errors?._form && (
         <div role="alert" className="alert alert-error">
           <AlertCircle className="h-5 w-5" />
           {state.errors._form}

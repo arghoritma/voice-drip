@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/services/db";
 import bcrypt from "bcryptjs";
+import { createSession } from "@/lib/session";
 
 export async function POST(request: Request) {
   try {
@@ -29,10 +30,7 @@ export async function POST(request: Request) {
       )[0];
     }
 
-    //TODO: Generate token
-
-    // TODO: Create session
-
+    await createSession(uid);
     const response = NextResponse.json({
       message: "Login berhasil",
       user: dbUser,
