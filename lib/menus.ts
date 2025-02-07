@@ -32,12 +32,6 @@ export const menuItems = [
     icon: FileBox,
     path: "/dashboard/files",
   },
-  {
-    key: "calendar",
-    label: "Calendar View",
-    icon: Calendar,
-    path: "/dashboard/calendar",
-  },
 ];
 
 export default menuItems;

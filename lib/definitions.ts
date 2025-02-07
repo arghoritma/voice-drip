@@ -22,6 +22,7 @@ export type FormState = {
     name?: string[];
     email?: string[];
     password?: string[];
+    phone_number?: string[];
     _form?: string[];
   };
   success?: boolean;
