@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import { UserCircle, Settings, LogOut, Bell } from "lucide-react";
+import { UserCircle, Settings, Bell } from "lucide-react";
+import ProfileInfo from "./ProfileInfo";
+import LogoutButton from "./ui/LogoutButton";
 
-export default function Navbar() {
+export default async function Navbar() {
   return (
     <div className="navbar bg-neutral text-neutral-content sticky top-0 z-50 ">
       <div className="flex-1">
@@ -71,24 +73,7 @@ export default function Navbar() {
             className="bg-neutral text-neutral-content menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <div className="px-4 py-3">
-              <div className="flex items-center gap-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <div>
-                  <p className="text-sm font-semibold">John Doe</p>
-                  <p className="text-xs text-gray-500">john@example.com</p>
-                </div>
-              </div>
+              <ProfileInfo />
             </div>
             <div className="border-t border-gray-200 my-2"></div>
             <li>
@@ -107,11 +92,8 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="/logout" className="flex items-center gap-2">
-                <LogOut size={16} />
-                Logout
-              </Link>
-            </li>{" "}
+              <LogoutButton />
+            </li>
           </ul>
         </div>
       </div>

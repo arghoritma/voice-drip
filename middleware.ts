@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAuth } from "./lib/auth-middleware";
 
 const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/auth/login", "/auth/signup", "/"];
+const publicRoutes = ["/auth/login", "/auth/register", "/"];
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;

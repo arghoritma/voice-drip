@@ -33,3 +33,16 @@ export type SessionPayload = {
   userId: string;
   expiresAt: Date;
 };
+
+export type ProfileResponse = {
+  success: boolean;
+  data: {
+    username: string;
+    email: string;
+    phone_number: string | null;
+    avatar: string | null;
+  } | null;
+  errors?: {
+    _form?: string[];
+  };
+};

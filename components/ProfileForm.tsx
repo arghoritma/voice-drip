@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { updateProfile } from "@/actions/profile";
-import { FormState } from "@/lib/definitions";
+import React, { useEffect, useState } from "react";
+import { updateProfile, getProfile } from "@/actions/profile";
+import { FormState, ProfileResponse } from "@/lib/definitions";
 import { useActionState } from "react";
 import { AlertCircle } from "lucide-react";
+import { verifySession } from "@/lib/dal";
+import { log } from "console";
 
 export default function ProfileForm() {
   const initialState: FormState = {
@@ -12,10 +14,25 @@ export default function ProfileForm() {
     errors: {},
   };
 
+  const [profile, setProfile] = useState<any>(null);
   const [state, actionUpdate, isPending] = useActionState(
     updateProfile,
     initialState
   );
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("/api/users");
+        const data = await response.json();
+        setProfile(data);
+      } catch (error) {
+        console.error("Failed to fetch profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <form
@@ -36,6 +53,7 @@ export default function ProfileForm() {
         <input
           type="text"
           name="name"
+          defaultValue={profile?.username}
           className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
           placeholder="Enter your full name"
         />
@@ -51,6 +69,7 @@ export default function ProfileForm() {
         <input
           type="email"
           name="email"
+          defaultValue={profile?.email}
           className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
           placeholder="Enter your email"
         />
@@ -66,6 +85,7 @@ export default function ProfileForm() {
         <input
           type="tel"
           name="phone_number"
+          defaultValue={profile?.phone_number}
           className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
           placeholder="Enter your phone number"
         />
@@ -74,30 +94,7 @@ export default function ProfileForm() {
         )}
       </div>
 
-      <div className="form-control w-full">
-        <label className="label">
-          <span className="label-text font-medium">Password</span>
-        </label>
-        <input
-          type="password"
-          name="password"
-          className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
-          placeholder="Enter new password (optional)"
-        />
-        {state.errors?.password && (
-          <div className="text-error text-sm">{state.errors.password}</div>
-        )}
-      </div>
-
-      <input type="hidden" name="userId" value="" />
-
       <div className="flex justify-end gap-3 sm:gap-4 pt-4">
-        <button
-          type="button"
-          className="btn btn-outline hover:btn-error btn-sm sm:btn-md"
-        >
-          Cancel
-        </button>
         <button
           type="submit"
           disabled={isPending}

@@ -5,6 +5,7 @@ Table users {
   phone_number varchar
   password varchar [not null]
   role varchar
+  avatar varchar
   created_at datetime [default: `CURRENT_TIMESTAMP`]
   updated_at datetime
 }

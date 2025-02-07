@@ -1,7 +1,7 @@
 "use server";
 
 import { verifySession } from "@/lib/dal";
-import { FormState } from "@/lib/definitions";
+import { FormState, ProfileResponse } from "@/lib/definitions";
 import db from "@/services/db";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
@@ -80,6 +80,35 @@ export async function updateProfile(
     return {
       errors: {
         _form: ["Failed to update profile. Please try again."],
+      },
+    };
+  }
+}
+
+export async function getProfile(): Promise<ProfileResponse> {
+  const session = await verifySession();
+
+  try {
+    const user = await db("users")
+      .where({ id: session.userId })
+      .select("username", "email", "phone_number", "avatar")
+      .first();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      success: true,
+      data: user,
+      errors: {},
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
+      errors: {
+        _form: ["Failed to fetch profile data"],
       },
     };
   }
