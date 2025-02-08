@@ -1,11 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "@/services/firebaseConfig";
-import {
-  GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export function useAuth() {
   const router = useRouter();
@@ -73,46 +69,42 @@ export function useAuth() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const result = await getRedirectResult(auth);
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+      const res = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.displayName,
+          uid: user.uid,
+          Avatar:
+            user.photoURL ||
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s",
+        }),
+      });
 
-      if (result) {
-        const user = result.user;
-        const res = await fetch("/api/auth/google", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            name: user.displayName,
-            uid: user.uid,
-            Avatar:
-              user.photoURL ||
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s",
-          }),
-        });
+      const data = await res.json();
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          if (res.status === 500) {
-            throw new Error("Login gagal");
-          } else {
-            throw new Error(data.message);
-          }
+      if (!res.ok) {
+        if (res.status === 500) {
+          throw new Error("Login gagal");
+        } else {
+          throw new Error(data.message);
         }
-
-        router.push("/dashboard");
-        router.refresh();
-      } else {
-        await signInWithRedirect(auth, provider);
       }
+
+      router.push("/dashboard");
+      router.refresh();
     } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
+
   const logout = async () => {
     try {
       setLoading(true);
