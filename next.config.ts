@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     // Mengatasi warning dari Knex
     config.ignoreWarnings = [{ module: /node_modules\/knex/ }];

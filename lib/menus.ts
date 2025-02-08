@@ -1,11 +1,8 @@
 import {
   LayoutDashboard,
   FileBox,
-  Calendar,
-  CalendarCheck2,
   ListTodoIcon,
 } from "lucide-react";
-import path from "path";
 
 export const menuItems = [
   {
@@ -20,18 +17,7 @@ export const menuItems = [
     icon: ListTodoIcon,
     path: "/dashboard/todos",
   },
-  {
-    key: "tasks",
-    label: "Tasks",
-    icon: CalendarCheck2,
-    path: "/dashboard/tasks",
-  },
-  {
-    key: "files",
-    label: "Files",
-    icon: FileBox,
-    path: "/dashboard/files",
-  },
+
 ];
 
 export default menuItems;

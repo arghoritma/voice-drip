@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { UserCircle, Settings, Bell } from "lucide-react";
+import { UserCircle, Bell } from "lucide-react";
 import ProfileInfo from "./ProfileInfo";
 import LogoutButton from "./ui/LogoutButton";
+import Avatar from "./ui/Avatar";
 
 export default async function Navbar() {
   return (
@@ -52,22 +53,11 @@ export default async function Navbar() {
                   View all notifications
                 </button>
               </div>
-            </div>{" "}
-          </div>
-        </div>{" "}
-        <div className="dropdown dropdown-end ">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
             </div>
           </div>
+        </div>
+        <div className="dropdown dropdown-end ">
+         <Avatar />
           <ul
             tabIndex={0}
             className="bg-neutral text-neutral-content menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
@@ -85,12 +75,7 @@ export default async function Navbar() {
                 <span className="badge">New</span>
               </Link>
             </li>
-            <li>
-              <Link href="/settings" className="flex items-center gap-2">
-                <Settings size={16} />
-                Settings
-              </Link>
-            </li>
+
             <li>
               <LogoutButton />
             </li>

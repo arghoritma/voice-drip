@@ -5,8 +5,6 @@ import { updateProfile, getProfile } from "@/actions/profile";
 import { FormState, ProfileResponse } from "@/lib/definitions";
 import { useActionState } from "react";
 import { AlertCircle } from "lucide-react";
-import { verifySession } from "@/lib/dal";
-import { log } from "console";
 
 export default function ProfileForm() {
   const initialState: FormState = {
@@ -32,7 +30,7 @@ export default function ProfileForm() {
     };
 
     fetchProfile();
-  }, []);
+  }, [state]);
 
   return (
     <form
