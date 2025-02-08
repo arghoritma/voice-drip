@@ -1,8 +1,4 @@
-import {
-  LayoutDashboard,
-  FileBox,
-  ListTodoIcon,
-} from "lucide-react";
+import { LayoutDashboard, FileBox, ListTodoIcon } from "lucide-react";
 
 export const menuItems = [
   {
@@ -13,11 +9,10 @@ export const menuItems = [
   },
   {
     key: "todos",
-    label: "Todos",
+    label: "Add Todos",
     icon: ListTodoIcon,
     path: "/dashboard/todos",
   },
-
 ];
 
 export default menuItems;

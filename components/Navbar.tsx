@@ -57,7 +57,7 @@ export default async function Navbar() {
           </div>
         </div>
         <div className="dropdown dropdown-end ">
-         <Avatar />
+          <Avatar />
           <ul
             tabIndex={0}
             className="bg-neutral text-neutral-content menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
@@ -72,7 +72,6 @@ export default async function Navbar() {
                   <UserCircle size={16} />
                   Profile
                 </div>
-                <span className="badge">New</span>
               </Link>
             </li>
 
