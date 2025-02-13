@@ -85,7 +85,7 @@ export async function updateProfile(
   }
 }
 
-export async function getProfile(): Promise<ProfileResponse> {
+export async function getProfile(): Promise<any> {
   const session = await verifySession();
 
   try {
@@ -98,18 +98,10 @@ export async function getProfile(): Promise<ProfileResponse> {
       throw new Error("User not found");
     }
 
-    return {
-      success: true,
-      data: user,
-      errors: {},
-    };
+    return { username: user.username, email: user.email };
   } catch (error) {
     return {
-      success: false,
-      data: null,
-      errors: {
-        _form: ["Failed to fetch profile data"],
-      },
+      error: error,
     };
   }
 }

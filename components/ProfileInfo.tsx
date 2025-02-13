@@ -1,24 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { getProfile } from "@/actions/profile";
+
+interface ProfileProps {
+  username: string;
+  email: string;
+}
 
 export default function ProfileInfo() {
-  const [user, setUser] = useState({ username: "", email: "" });
+  const [user, setUser] = useState<ProfileProps>({ username: "", email: "" });
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const gethUser = async () => {
       try {
-        const response = await fetch("/api/users");
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        }
+        const profile = await getProfile();
+        setUser(profile);
+        console.log(profile);
       } catch (error) {
-        console.error("Failed to fetch user:", error);
+        console.error("Failed to get user:", error);
       }
     };
 
-    fetchUser();
+    gethUser();
   }, []);
 
   return (
