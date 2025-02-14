@@ -6,8 +6,7 @@ import { verifySession } from "@/lib/dal";
 
 const avatar_path = "avatars";
 const uploadDir = `${process.env.STORAGE_ROOT}/${avatar_path}`;
-const storage_server =
-  process.env.STORAGE_HOST + ":" + process.env.STORAGE_PORT;
+const storage_server = process.env.STORAGE_URL;
 
 export async function POST(req: Request) {
   try {
