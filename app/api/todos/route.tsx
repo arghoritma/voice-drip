@@ -49,6 +49,9 @@ export async function PATCH(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const { userId } = await verifySession();
+
+  await db("todos").where({ id, user_id: userId }).delete();
 
   return NextResponse.json({ message: "Todo deleted successfully" });
 }
