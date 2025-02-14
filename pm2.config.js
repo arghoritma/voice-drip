@@ -1,15 +1,17 @@
 const pkg = require("./package.json");
+require("dotenv").config();
 
 module.exports = {
   apps: [
     {
       name: pkg.name, // Menggunakan nama dari package.json
-      script: "./node_modules/next/dist/bin/next",
+      script: "npm",
       args: "start",
       exec_mode: "cluster",
       instances: -1,
       env: {
-        PORT: process.env.PORT || 3000,
+        PORT: process.env.PORT,
+        NODE_ENV: process.env.NODE_ENV,
       },
     },
     {
@@ -18,7 +20,7 @@ module.exports = {
       exec_mode: "cluster",
       instances: 1,
       env: {
-        PORT: process.env.STORAGE_PORT || 5000,
+        PORT: process.env.STORAGE_PORT,
       },
     },
   ],
