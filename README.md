@@ -52,10 +52,12 @@ yarn dev
 
 ## Project Structure
 
+```
 argonext/
 ├── app/ # Main React components
+│ └── api/ # API route handlers and third-party endpoints
 ├── components/ # Reusable UI components
-├── config/ # Application configuration files
+├── services/ # Application configuration files
 ├── db/ # Database configuration and access
 ├── migrations/ # Database migration files
 ├── public/ # Static assets like images and icons
@@ -71,9 +73,11 @@ argonext/
 ├── middleware.ts # Global Next.js middleware for route protection
 ├── erd.dbml # Entity-Relationship Diagram (ERD) file
 ├── knexfile.ts # Knex.js configuration file
-├── next.config.ts # Next.js configuration file
+├── next.config.ts # Next.js configuration files
 ├── tailwind.config.ts # Tailwind CSS configuration file
 └── tsconfig.json # TypeScript configuration file
+
+```
 
 ## Core Files Documentation
 
@@ -118,6 +122,48 @@ Global route protection and authentication:
 - Route matching configuration for static and dynamic paths
 - Support for third-party API authentication via x-auth-session header
 
+### Third-Party API Integration
+
+ArgoNext can be used as a backend service for third-party applications. To integrate with external services:
+
+#### Authentication Header
+
+All API requests from third-party applications must include the session token in the header:
+
+```http
+X-User-Session: <session-token>
+```
+
+#### API Endpoints
+
+1. **Verify Authentication Status**
+
+   ```http
+   GET /api
+   Headers:
+     X-User-Session: <session-token>
+
+   Response (200 OK):
+   {
+     "userId": "user-id",
+     "isAuth": true
+   }
+
+   Response (401 Unauthorized):
+   {
+     "message": "Not authenticated",
+     "isAuth": false
+   }
+   ```
+
+#### Implementation Notes
+
+- Session tokens must be obtained through the standard authentication process
+- The `verifySession()` function in `lib/dal.ts` automatically validates the X-User-Session header
+- No cookies are required when using header-based authentication
+- All protected API routes will verify the session token before processing requests
+- Failed authentication attempts return 401 Unauthorized responses
+
 ## Technologies Used
 
 ### Frontend
@@ -137,6 +183,9 @@ Global route protection and authentication:
 - **JWT Authentication**
 - **Bcrypt 5.1.1**
 - **Multer 1.4.5-lts.1**
+- **Jose 5.9.6**
+- **UUID 11.0.3**
+- **Zod 3.24.1**
 
 ### Development Tools
 
