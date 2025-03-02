@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Argonext",
+  title: "Nextar",
   description: "Build your app faster",
 };
 

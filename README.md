@@ -1,6 +1,6 @@
-# ArgoNext - Fullstack Web Application
+# Nextar - Fullstack Web Application
 
-ArgoNext is a modern template for fullstack web application development using Next.js, React, and SQLite. The template is flexible and supports changing the database driver to MySQL, PostgreSQL, and others.
+Nextar is a modern template for fullstack web application development using Next.js, React, and SQLite. The template is flexible and supports changing the database driver to MySQL, PostgreSQL, and others.
 
 ## Features
 
@@ -21,8 +21,8 @@ ArgoNext is a modern template for fullstack web application development using Ne
 
 1. Clone the repository:
 
-git clone https://github.com/arghoritma/argonext.git
-cd argonext
+git clone https://github.com/arghoritma/Nextar.git
+cd Nextar
 
 2. Install dependencies:
 
@@ -53,7 +53,7 @@ yarn dev
 ## Project Structure
 
 ```
-argonext/
+Nextar/
 ├── app/ # Main React components
 │ └── api/ # API route handlers and third-party endpoints
 ├── components/ # Reusable UI components
@@ -124,7 +124,7 @@ Global route protection and authentication:
 
 ### Third-Party API Integration
 
-ArgoNext can be used as a backend service for third-party applications. To integrate with external services:
+Nextar can be used as a backend service for third-party applications. To integrate with external services:
 
 #### Authentication Header
 

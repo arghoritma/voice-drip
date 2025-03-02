@@ -6,7 +6,7 @@ dotenv.config();
 
 const BASE_PATH = process.cwd();
 const DB_PATH = `/${process.env.DATABASE_PATH}` || "/db";
-const DB_NAME = process.env.DATABASE_NAME || "argonext";
+const DB_NAME = process.env.DATABASE_NAME || "Nextar";
 
 const config = (): Knex.Config => ({
   client: "better-sqlite3",
