@@ -200,9 +200,7 @@ X-User-Session: <session-token>
 - **[Next.js Documentation](https://nextjs.org/docs)**
 - **[React Documentation](https://react.dev/)**
 - **[Knex Documentation](https://knexjs.org/)**
-- **[SQLite Documentation](https://sqlite.org/docs.html)**
 - **[Tailwind CSS Documentation](https://tailwindcss.com/docs)**
-- **[Lucide React Documentation](https://lucide.dev/)**
 
 ## License
 
