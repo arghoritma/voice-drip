@@ -2,22 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { User } from "lucide-react";
+import { getProfile } from "@/actions/profile";
 
 export default function Avatar() {
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState<string | null>(null);
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const response = await fetch("/api/users");
-        const userData = await response.json();
-        if (userData) {
-          setAvatar(userData.avatar || "");
-        }
-      } catch (error) {
-        console.error(error);
+    const getAvatar = async () => {
+      const action = await getProfile();
+      if (action.avatar) {
+        setAvatar(action.avatar);
+        console.log(action.avatar);
       }
     };
-    getUserData();
+    getAvatar();
   }, []);
   return (
     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

@@ -1,10 +1,8 @@
 "use client";
-
-import React, { use } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 
 export default function GoogleLogin() {
-  const { googleLogin, loading } = useAuth();
+  const { googleLogin, loading } = useGoogleAuth();
   return (
     <button
       onClick={googleLogin}

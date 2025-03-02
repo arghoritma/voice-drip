@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Camera, User } from "lucide-react";
-import { toast } from "react-hot-toast";
+import { getProfile } from "@/actions/profile";
 
 export default function ProfilePhoto() {
   const [avatar, setAvatar] = useState("");
@@ -10,14 +10,12 @@ export default function ProfilePhoto() {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await fetch("/api/users");
-        const userData = await response.json();
-        if (userData) {
-          setAvatar(userData.avatar || "");
+        const profile = await getProfile();
+
+        if (profile) {
+          setAvatar(profile.avatar || "");
         }
-      } catch (error) {
-        toast.error("Error loading user data");
-      }
+      } catch (error) {}
     };
     getUserData();
   }, []);
@@ -39,10 +37,7 @@ export default function ProfilePhoto() {
         const data = await response.json();
 
         setAvatar(data.url);
-        toast.success("Avatar uploaded successfully");
-      } catch (error) {
-        toast.error("Error uploading avatar");
-      }
+      } catch (error) {}
     }
   };
   return (

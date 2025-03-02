@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const BASE_PATH = process.cwd();
-const DB_PATH = process.env.DATABASE_PATH || "../DB";
+const DB_PATH = `/${process.env.DATABASE_PATH}` || "/db";
 const DB_NAME = process.env.DATABASE_NAME || "argonext";
 
 const config = (): Knex.Config => ({

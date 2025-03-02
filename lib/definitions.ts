@@ -15,8 +15,11 @@ export const SignupFormSchema = z.object({
       message: "Contain at least one special character.",
     })
     .trim(),
+  phone_number: z
+    .string()
+    .regex(/^\d+$/, { message: "Phone number must contain only numbers." })
+    .trim(),
 });
-
 export type FormState = {
   errors?: {
     name?: string[];

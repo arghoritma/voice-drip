@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import { getProfile } from "@/actions/profile";
 
 interface ProfileProps {
-  username: string;
+  name: string;
   email: string;
 }
 
 export default function ProfileInfo() {
-  const [user, setUser] = useState<ProfileProps>({ username: "", email: "" });
+  const [user, setUser] = useState<ProfileProps>({ name: "", email: "" });
 
   useEffect(() => {
     const gethUser = async () => {
@@ -41,9 +41,7 @@ export default function ProfileInfo() {
       </svg>
       <div>
         <p className="text-sm font-semibold">
-          {user.username.length > 13
-            ? user.username.slice(0, 12) + "..."
-            : user.username}
+          {user.name.length > 13 ? user.name.slice(0, 12) + "..." : user.name}
         </p>
         <p className="text-xs text-gray-500">
           {user.email.length > 15

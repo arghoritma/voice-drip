@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
   );
   const isPublicRoute = publicRoutes.includes(path);
 
-  const headerSession = req.headers.get("x-user-session");
+  const headerSession = req.headers.get("X-User-Session");
   const cookieSession = req.cookies.get("session")?.value;
   const session = headerSession || cookieSession;
   const payload = await verifyAuth(session);

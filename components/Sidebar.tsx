@@ -12,7 +12,7 @@ export default function Sidebar() {
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
       <div className="menu z-[100] p-4 pt-20 w-60 min-h-full bg-base-200 text-base-content sm:pt-4">
         <div className="flex items-center gap-2 mb-4 sm:flex hidden">
-          <h2 className="text-xl font-bold">Argonext Todos</h2>
+          <h2 className="text-xl font-bold">Argonext</h2>
         </div>
         <ul>
           {menuItems.map((item) => (

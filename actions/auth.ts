@@ -48,7 +48,7 @@ export async function signup(
       await trx("users").insert({
         id: userId,
         email: email,
-        username: name,
+        name: name,
         password: await bcrypt.hash(password, 10),
         created_at: new Date(),
         updated_at: new Date(),
@@ -136,6 +136,34 @@ export async function signin(
     return {
       errors: {
         _form: ["An error occurred during sign in. Please try again."],
+      },
+    };
+  }
+}
+
+export async function googleSignin(payload: any) {
+  const { email, name, uid, Avatar } = payload;
+  try {
+    const existingUser = await db("users").where({ email }).first();
+
+    if (!existingUser) {
+      await db("users").insert({
+        id: uid,
+        email,
+        name: name,
+        password_has: uid,
+        created_at: new Date(),
+        updated_at: new Date(),
+        avatar: Avatar,
+      });
+    }
+    await createSession(uid);
+    redirect("/dashboard");
+  } catch (error) {
+    console.error("Error during Google sign-in:", error);
+    return {
+      errors: {
+        _form: ["An error occurred during Google sign-in. Please try again."],
       },
     };
   }

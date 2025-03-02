@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { updateProfile, getProfile } from "@/actions/profile";
-import { FormState, ProfileResponse } from "@/lib/definitions";
+import { FormState } from "@/lib/definitions";
 import { useActionState } from "react";
 import { AlertCircle } from "lucide-react";
 
@@ -21,9 +21,11 @@ export default function ProfileForm() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("/api/users");
-        const data = await response.json();
-        setProfile(data);
+        const profile = await getProfile();
+        if (profile) {
+          setProfile(profile);
+        }
+        console.log("Profile:", profile);
       } catch (error) {
         console.error("Failed to fetch profile:", error);
       }
@@ -51,7 +53,7 @@ export default function ProfileForm() {
         <input
           type="text"
           name="name"
-          defaultValue={profile?.username}
+          defaultValue={profile?.name}
           className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
           placeholder="Enter your full name"
         />
@@ -62,28 +64,12 @@ export default function ProfileForm() {
 
       <div className="form-control w-full">
         <label className="label">
-          <span className="label-text font-medium">Email</span>
-        </label>
-        <input
-          type="email"
-          name="email"
-          defaultValue={profile?.email}
-          className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
-          placeholder="Enter your email"
-        />
-        {state.errors?.email && (
-          <div className="text-error text-sm">{state.errors.email}</div>
-        )}
-      </div>
-
-      <div className="form-control w-full">
-        <label className="label">
           <span className="label-text font-medium">Phone Number</span>
         </label>
         <input
           type="tel"
           name="phone_number"
-          defaultValue={profile?.phone_number}
+          defaultValue={profile?.phone}
           className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
           placeholder="Enter your phone number"
         />

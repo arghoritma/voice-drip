@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const fileUrl = `http://${storage_server}/${avatar_path}/${fileName}`;
+    const fileUrl = `${storage_server}/${avatar_path}/${fileName}`;
 
     await db("users").update({ avatar: fileUrl }).where({ id: user_id });
 

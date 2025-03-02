@@ -102,7 +102,7 @@ Manages user profile operations:
 Session verification and user authentication:
 
 - `verifySession()`: Cached function to verify user sessions
-- Handles both header and cookie-based sessions (x-user-session and x-auth-session)
+- Handles both header and cookie-based sessions (X-User-Session and x-auth-session)
 - Automatic redirection for unauthenticated users
 - Database integration for session validation
 - Support for third-party API access via x-auth-session header

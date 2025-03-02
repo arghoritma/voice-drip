@@ -7,12 +7,15 @@ import { redirect } from "next/navigation";
 import db from "@/services/db";
 
 export const verifySession = cache(async () => {
-  const header = (await headers()).get("x-user-session");
+  const header = (await headers()).get("X-User-Session");
   const cookie = (await cookies()).get("session")?.value;
   const sessionValue = header || cookie;
   const session = await decrypt(sessionValue);
 
   if (!session?.id) {
+    if (header) {
+      return { isAuth: false };
+    }
     redirect("/auth/login");
   }
 
