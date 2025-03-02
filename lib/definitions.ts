@@ -20,6 +20,7 @@ export const SignupFormSchema = z.object({
     .regex(/^\d+$/, { message: "Phone number must contain only numbers." })
     .trim(),
 });
+
 export type FormState = {
   errors?: {
     name?: string[];
