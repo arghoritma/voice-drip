@@ -17,7 +17,6 @@ Table files {
   uploaded_at datetime [default: `CURRENT_TIMESTAMP`]
 }
 
-
 Table sessions {
   id varchar [pk]
   user_id varchar [not null, ref: > users.id]
@@ -29,4 +28,129 @@ Table sessions {
   created_at datetime [default: `CURRENT_TIMESTAMP`]
   last_accessed datetime [default: `CURRENT_TIMESTAMP`]
   expires_at datetime [not null]
+}
+
+
+Table features {
+  id varchar [pk]
+  title VARCHAR(255)
+  description TEXT
+  status FEATURE_STATUS
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+  user_id INT [ref: > users.id]
+}
+
+Enum FEATURE_STATUS {
+  planned
+  in_progress
+  completed
+  rejected
+}
+
+Table bug_reports {
+  id varchar [pk]
+  title VARCHAR(255)
+  description TEXT
+  status BUG_STATUS
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+  user_id INT [ref: > users.id]
+}
+
+Enum BUG_STATUS {
+  open
+  in_progress
+  resolved
+  closed
+}
+
+Table requests {
+  id varchar [pk]
+  title VARCHAR(255)
+  description TEXT
+  type REQUEST_TYPE
+  status REQUEST_STATUS
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+  user_id INT [ref: > users.id]
+}
+
+Enum REQUEST_TYPE {
+  feature
+  bug
+  improvement
+}
+
+Enum REQUEST_STATUS {
+  submitted
+  approved
+  rejected
+  in_progress
+  completed
+}
+
+Table votes {
+  id varchar [pk]
+  user_id INT [ref: > users.id]
+  request_id INT [ref: > requests.id]
+  created_at TIMESTAMP
+}
+
+Table comments {
+    id varchar [pk]
+    user_id INT [ref: > users.id]
+    request_id INT [ref: > requests.id]
+    content TEXT
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+Table activity_log {
+    id varchar [pk]
+    user_id INT [ref: > users.id]
+    object_type ACTIVITY_OBJECT_TYPE
+    object_id INT
+    activity_type ACTIVITY_TYPE
+    description TEXT
+    created_at TIMESTAMP
+}
+
+Enum ACTIVITY_OBJECT_TYPE {
+    feature
+    bug
+    request
+    comment
+}
+
+Enum ACTIVITY_TYPE {
+    created
+    updated
+    deleted
+    status_changed
+    commented
+    voted
+}
+
+Table tags {
+    id SERIAL [pk, increment]
+    name VARCHAR(255)
+}
+
+Table feature_tags {
+    feature_id INT [ref: > features.id]
+    tag_id INT [ref: > tags.id]
+    PRIMARY KEY (feature_id, tag_id)
+}
+
+Table bug_tags {
+    bug_id INT [ref: > bug_reports.id]
+    tag_id INT [ref: > tags.id]
+    PRIMARY KEY (bug_id, tag_id)
+}
+
+Table request_tags {
+    request_id INT [ref: > requests.id]
+    tag_id INT [ref: > tags.id]
+    PRIMARY KEY (request_id, tag_id)
 }
