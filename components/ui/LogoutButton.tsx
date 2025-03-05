@@ -17,13 +17,16 @@ export default function LogoutButton() {
   };
 
   return (
-    <button className="flex items-center gap-2" onClick={handleLogout}>
+    <button
+      className="flex items-center justify-between w-full gap-2"
+      onClick={handleLogout}
+    >
+      <span>{loading ? "Loging Out..." : "Logout"}</span>
       {loading ? (
         <span className="loading loading-spinner loading-xs"></span>
       ) : (
         <LogOut size={16} />
       )}
-      {loading ? "Loging Out..." : "Logout"}
     </button>
   );
 }

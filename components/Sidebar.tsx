@@ -1,34 +1,38 @@
-"use client";
-
 import React from "react";
-import menuItems from "@/lib/menus";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
-  const pathname = usePathname();
   return (
-    <div className="drawer-side">
-      <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-      <div className="menu z-[100] p-4 pt-20 w-60 min-h-full bg-base-200 text-base-content sm:pt-4">
-        <div className="flex items-center gap-2 mb-4 sm:flex hidden">
-          <h2 className="text-xl font-bold">Nextar</h2>
+    <div className="col-span-3">
+      <div className="card bg-base-100 shadow-xl sticky top-20">
+        <div className="card-body">
+          <div className="space-y-2">
+            <Link
+              href="/feed"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              Feed
+            </Link>
+            <Link
+              href="/features"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              Features
+            </Link>
+            <Link
+              href="/bugs"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              Bug Reports
+            </Link>
+            <Link
+              href="/requests"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              Requests
+            </Link>
+          </div>
         </div>
-        <ul>
-          {menuItems.map((item) => (
-            <li key={item.key}>
-              <Link
-                href={item.path}
-                className={`flex items-center gap-3 ${
-                  item.path === pathname ? "active" : ""
-                }`}
-              >
-                <item.icon className="w-4 h-4" />
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

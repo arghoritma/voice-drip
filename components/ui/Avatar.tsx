@@ -20,7 +20,12 @@ export default function Avatar() {
     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
       <div className="w-10 rounded-full">
         {avatar ? (
-          <img src={avatar} alt="Profile" className="object-cover" />
+          <img
+            loading="lazy"
+            src={avatar}
+            alt="Profile"
+            className="object-cover"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-base-200">
             <User className="h-5 w-5 text-base-content opacity-40" />

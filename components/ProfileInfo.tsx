@@ -41,7 +41,7 @@ export default function ProfileInfo() {
       </svg>
       <div>
         <p className="text-sm font-semibold">
-          {user.name.length > 13 ? user.name.slice(0, 12) + "..." : user.name}
+          {user.name?.length > 13 ? user.name.slice(0, 12) + "..." : user.name}
         </p>
         <p className="text-xs text-gray-500">
           {user.email.length > 15

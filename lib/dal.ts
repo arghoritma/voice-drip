@@ -13,10 +13,7 @@ export const verifySession = cache(async () => {
   const session = await decrypt(sessionValue);
 
   if (!session?.id) {
-    if (header) {
-      return { isAuth: false };
-    }
-    redirect("/auth/login");
+    return { isAuth: false };
   }
 
   const user = await db("sessions")
