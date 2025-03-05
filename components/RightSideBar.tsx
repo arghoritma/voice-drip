@@ -3,7 +3,7 @@ import Avatar from "./ui/Avatar";
 
 export default function RightSideBar() {
   return (
-    <div className="col-span-3">
+    <div className="hidden md:block md:col-span-3">
       <div className="card bg-base-100 shadow-xl sticky top-20">
         <div className="card-body">
           <h3 className="font-bold text-lg">Trending Tags</h3>

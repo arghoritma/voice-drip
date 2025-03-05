@@ -5,19 +5,13 @@ import { verifySession } from "@/lib/dal";
 export default async function Navbar() {
   const { isAuth } = await verifySession();
   return (
-    <div className="navbar bg-neutral text-neutral-content sticky top-0 z-50 ">
+    <div className="navbar bg-base-100 text-base-content sticky top-0 z-50 glass ">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Driplab Issues</a>
+        <a className="btn btn-ghost text-xl">Voices Drip</a>
       </div>
       <div className="flex-none">
         {isAuth ? (
           <>
-            <a
-              href="/add-issue"
-              className="btn btn-primary btn-md rounded-md mr-3"
-            >
-              Add Issues
-            </a>
             <NotifNavbar />
             <ProfilNavbar />
           </>
