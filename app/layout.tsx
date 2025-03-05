@@ -40,7 +40,7 @@ export default function RootLayout({
 
               {/* Mobile Navigation */}
               <MobileNavigation />
-              {children}
+              <div className="col-span-1 md:col-span-6">{children}</div>
               <RightSideBar />
             </div>
           </div>

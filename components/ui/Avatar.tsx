@@ -3,11 +3,11 @@ interface AvatarProps {
   src?: string;
 }
 
-export default function Avatar({ className = "", src }: AvatarProps) {
+export default function Avatar({ className, src }: AvatarProps) {
   return (
     <img
       loading="lazy"
-      src={src || ""}
+      src={src}
       alt="Profile"
       className={`w-10 rounded-full object-cover ${className}`}
     />

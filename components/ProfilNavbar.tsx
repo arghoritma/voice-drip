@@ -17,10 +17,7 @@ export default function ProfilNavbar() {
         </div>
         <div className="border-t border-gray-200 my-2"></div>
         <li>
-          <Link
-            href="/dashboard/profile"
-            className="flex justify-between w-full"
-          >
+          <Link href="/profile" className="flex justify-between w-full">
             <span>Profile</span>
             <UserCircle size={16} />
           </Link>

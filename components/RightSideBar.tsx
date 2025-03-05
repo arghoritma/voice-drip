@@ -22,7 +22,10 @@ export default function RightSideBar() {
               { name: "Bob Johnson", status: "away" },
             ].map((user, index) => (
               <div key={index} className="flex items-center gap-3">
-                <Avatar />
+                <Avatar
+                  className="h-10 w-10"
+                  src={`https://i.pravatar.cc/150?img=${index + 1}`}
+                />
                 <div>
                   <p className="font-semibold">{user.name}</p>
                   <p className="text-xs text-base-content/70">{user.status}</p>
