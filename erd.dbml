@@ -1,3 +1,7 @@
+Project feedback_system {
+  Note: 'Feedback System Database Schema'
+}
+
 Table users {
   id varchar [pk]
   email varchar [unique, not null]
@@ -30,15 +34,14 @@ Table sessions {
   expires_at datetime [not null]
 }
 
-
 Table features {
   id varchar [pk]
-  title VARCHAR(255)
-  description TEXT
+  title varchar(255)
+  description text
   status FEATURE_STATUS
-  created_at TIMESTAMP
-  updated_at TIMESTAMP
-  user_id INT [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+  user_id varchar [ref: > users.id]
 }
 
 Enum FEATURE_STATUS {
@@ -50,12 +53,12 @@ Enum FEATURE_STATUS {
 
 Table bug_reports {
   id varchar [pk]
-  title VARCHAR(255)
-  description TEXT
+  title varchar(255)
+  description text
   status BUG_STATUS
-  created_at TIMESTAMP
-  updated_at TIMESTAMP
-  user_id INT [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+  user_id varchar [ref: > users.id]
 }
 
 Enum BUG_STATUS {
@@ -67,13 +70,13 @@ Enum BUG_STATUS {
 
 Table requests {
   id varchar [pk]
-  title VARCHAR(255)
-  description TEXT
+  title varchar(255)
+  description text
   type REQUEST_TYPE
   status REQUEST_STATUS
-  created_at TIMESTAMP
-  updated_at TIMESTAMP
-  user_id INT [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+  user_id varchar [ref: > users.id]
 }
 
 Enum REQUEST_TYPE {
@@ -92,65 +95,71 @@ Enum REQUEST_STATUS {
 
 Table votes {
   id varchar [pk]
-  user_id INT [ref: > users.id]
-  request_id INT [ref: > requests.id]
-  created_at TIMESTAMP
+  user_id varchar [ref: > users.id]
+  request_id varchar [ref: > requests.id]
+  created_at timestamp
 }
 
 Table comments {
-    id varchar [pk]
-    user_id INT [ref: > users.id]
-    request_id INT [ref: > requests.id]
-    content TEXT
-    created_at TIMESTAMP
-    updated_at TIMESTAMP
+  id varchar [pk]
+  user_id varchar [ref: > users.id]
+  request_id varchar [ref: > requests.id]
+  content text
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table activity_log {
-    id varchar [pk]
-    user_id INT [ref: > users.id]
-    object_type ACTIVITY_OBJECT_TYPE
-    object_id INT
-    activity_type ACTIVITY_TYPE
-    description TEXT
-    created_at TIMESTAMP
+  id varchar [pk]
+  user_id varchar [ref: > users.id]
+  object_type ACTIVITY_OBJECT_TYPE
+  object_id varchar
+  activity_type ACTIVITY_TYPE
+  description text
+  created_at timestamp
 }
 
 Enum ACTIVITY_OBJECT_TYPE {
-    feature
-    bug
-    request
-    comment
+  feature
+  bug
+  request
+  comment
 }
 
 Enum ACTIVITY_TYPE {
-    created
-    updated
-    deleted
-    status_changed
-    commented
-    voted
+  created
+  updated
+  deleted
+  status_changed
+  commented
+  voted
 }
 
 Table tags {
-    id SERIAL [pk, increment]
-    name VARCHAR(255)
+  id varchar [pk]
+  name varchar(255)
 }
 
 Table feature_tags {
-    feature_id INT [ref: > features.id]
-    tag_id INT [ref: > tags.id]
-    PRIMARY KEY (feature_id, tag_id)
+  feature_id varchar [ref: > features.id]
+  tag_id varchar [ref: > tags.id]
+  indexes {
+    (feature_id, tag_id) [pk]
+  }
 }
 
 Table bug_tags {
-    bug_id INT [ref: > bug_reports.id]
-    tag_id INT [ref: > tags.id]
-    PRIMARY KEY (bug_id, tag_id)
+  bug_id varchar [ref: > bug_reports.id]
+  tag_id varchar [ref: > tags.id]
+  indexes {
+    (bug_id, tag_id) [pk]
+  }
 }
 
 Table request_tags {
-    request_id INT [ref: > requests.id]
-    tag_id INT [ref: > tags.id]
-    PRIMARY KEY (request_id, tag_id)
+  request_id varchar [ref: > requests.id]
+  tag_id varchar [ref: > tags.id]
+  indexes {
+    (request_id, tag_id) [pk]
+  }
 }
