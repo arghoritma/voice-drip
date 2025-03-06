@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import MyAvatar from "@/components/ui/MyAvatar";
+import CreateRequestForm from "./forms/createPost";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,17 +44,7 @@ export default function CreatePost() {
                 ✕
               </button>
             </div>
-            <form className="py-4">
-              <textarea
-                className="textarea textarea-bordered w-full"
-                placeholder="What's on your mind?"
-              ></textarea>
-              <div className="modal-action">
-                <button type="submit" className="btn btn-primary">
-                  Post
-                </button>
-              </div>
-            </form>
+            <CreateRequestForm />
           </div>
           <form method="dialog" className="modal-backdrop">
             <button onClick={() => setIsModalOpen(false)}>close</button>

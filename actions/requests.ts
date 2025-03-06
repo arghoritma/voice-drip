@@ -3,21 +3,11 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
-import { redirect } from "next/navigation";
-
-export type RequestFormState = {
-  errors?: {
-    title?: string[];
-    description?: string[];
-    type?: string[];
-    _form?: string[];
-  };
-};
 
 export async function createRequest(
   prev: any,
   formData: FormData
-): Promise<RequestFormState> {
+): Promise<any> {
   const session = await verifySession();
   if (!session.isAuth) {
     return {
@@ -67,7 +57,10 @@ export async function createRequest(
       });
     });
 
-    redirect("/");
+    return {
+      success: true,
+      errors: {},
+    };
   } catch (error) {
     console.error("Error creating request:", error);
     return {
