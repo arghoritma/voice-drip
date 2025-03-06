@@ -71,7 +71,7 @@ export async function createRequest(
     };
   }
 }
-export async function getRequests(userId?: string): Promise<{
+export async function getRequests(): Promise<{
   success: boolean;
   data?: {
     id: string;
@@ -91,6 +91,7 @@ export async function getRequests(userId?: string): Promise<{
   }[];
   errors?: { _form?: string[] };
 }> {
+  const session = await verifySession();
   try {
     // Base query without conditional raw statement
     let requestsQuery = db("requests")
@@ -116,11 +117,11 @@ export async function getRequests(userId?: string): Promise<{
       );
 
     // Add is_voted calculation based on userId presence
-    if (userId) {
+    if (session.userId) {
       requestsQuery = requestsQuery.select(
         db.raw(
           "(SELECT COUNT(*) > 0 FROM votes WHERE votes.request_id = requests.id AND votes.user_id = ?) as is_voted",
-          [userId]
+          [session.userId]
         )
       );
     } else {

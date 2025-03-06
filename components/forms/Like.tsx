@@ -6,18 +6,33 @@ import { useState } from "react";
 interface LikeProps {
   item: number;
   islike: boolean;
+  requestId: string;
 }
 
-export default function Like({ item, islike }: LikeProps) {
+export default function Like({ item, islike, requestId }: LikeProps) {
   const [likes, setLikes] = useState<number>(item || 0);
   const [isLiked, setIsLiked] = useState(islike);
 
   const handleLike = async () => {
-    setIsLiked(!isLiked);
-    if (!isLiked) {
-      setLikes(likes + 1);
-    } else {
-      setLikes(likes - 1);
+    try {
+      const response = await fetch("/api/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ requestId }),
+      });
+
+      if (response.ok) {
+        setIsLiked(!isLiked);
+        if (!isLiked) {
+          setLikes(likes + 1);
+        } else {
+          setLikes(likes - 1);
+        }
+      }
+    } catch (error) {
+      console.error("Error liking request:", error);
     }
   };
 

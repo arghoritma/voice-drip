@@ -30,7 +30,7 @@ export default function PostCard({ item }: PostCardProps) {
           ))}
         </div>
         <div className="flex justify-end gap-2 items-center mt-4 pt-4 border-t">
-          <Like item={item.likes} islike={item.isVoted} />
+          <Like item={item.likes} islike={item.isVoted} requestId={item.id} />
           <button className="btn btn-ghost btn-sm gap-2">
             <MessageCircle
               fill={item.comments > 0 ? "currentColor" : "none"}
