@@ -25,3 +25,26 @@ export interface Request {
   updated_at: Date;
   user_id: string;
 }
+
+export interface CommentWithUser {
+  id: string;
+  user_id: string;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
+  user_name: string; // Nama user
+  user_avatar: string; // Avatar user
+}
+
+export interface RequestWithDetails {
+  id: string;
+  title: string;
+  description: string;
+  type: "feature" | "bug" | "improvement";
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+  user_id: string;
+  comments: CommentWithUser[]; // Komentar dengan informasi user
+  vote_count: number;
+}
