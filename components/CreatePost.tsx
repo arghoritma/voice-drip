@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import MyAvatar from "@/components/ui/MyAvatar";
-import CreateRequestForm from "@/components/forms/CreatePost";
+import CreateRequestForm from "@/components/forms/CreatePostForm";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
