@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nextar",
-  description: "Build your app faster",
+  title: "Voice Drip",
+  description: "Voice Drip is a platform for sharing your thoughts and ideas.",
 };
 
 export default function RootLayout({
