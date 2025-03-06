@@ -3,6 +3,7 @@ import Avatar from "@/components/ui/Avatar";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { PostCardProps } from "@/types";
 import Like from "./forms/Like";
+import Link from "next/link";
 
 export default function PostCard({ item }: PostCardProps) {
   return (
@@ -43,13 +44,16 @@ export default function PostCard({ item }: PostCardProps) {
         </div>
         <div className="flex justify-end gap-2 items-center mt-4 pt-4 border-t">
           <Like item={item.likes} islike={item.isVoted} requestId={item.id} />
-          <button className="btn btn-ghost btn-sm gap-2">
+          <Link
+            href={`/posts/${item.id}`}
+            className="btn btn-ghost btn-sm gap-2"
+          >
             <MessageCircle
               fill={item.comments > 0 ? "currentColor" : "none"}
               size={18}
             />{" "}
             {item.comments > 0 && item.comments}
-          </button>
+          </Link>
           <button className="btn btn-ghost btn-sm">
             <Share2 size={18} />
           </button>

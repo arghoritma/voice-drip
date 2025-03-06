@@ -36,6 +36,10 @@ export interface CommentWithUser {
 }
 
 export interface RequestWithDetails {
+  user: {
+    name: string;
+    avatar: string;
+  };
   id: string;
   title: string;
   description: string;
@@ -46,6 +50,7 @@ export interface RequestWithDetails {
   user_id: string;
   comments: CommentWithUser[]; // Komentar dengan informasi user
   vote_count: number;
+  tags: string[];
 }
 
 export interface PostCardProps {

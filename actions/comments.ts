@@ -3,8 +3,10 @@ import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
 
 export async function addCommentToRequest(
+  prev: any,
   requestId: string,
-  content: string
+  content: string,
+  formData: FormData
 ): Promise<{
   success: boolean;
   errors?: { _form?: string[] };
@@ -20,6 +22,8 @@ export async function addCommentToRequest(
         },
       };
     }
+
+    const content = formData.get("content") as string;
 
     // Validasi konten komentar
     if (!content || content.trim().length === 0) {

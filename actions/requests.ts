@@ -71,6 +71,7 @@ export async function createRequest(
     };
   }
 }
+
 export async function getRequests(): Promise<{
   success: boolean;
   data?: {
@@ -202,8 +203,16 @@ export async function getRequestWithDetails(requestId: string): Promise<{
   errors?: { _form?: string[] };
 }> {
   try {
-    // Mengambil data request berdasarkan ID
-    const request = await db("requests").where("id", requestId).first();
+    // Mengambil data request dan user terkait berdasarkan ID
+    const request = await db("requests")
+      .join("users", "requests.user_id", "users.id")
+      .select(
+        "requests.*",
+        "users.name as user_name",
+        "users.avatar as user_avatar"
+      )
+      .where("requests.id", requestId)
+      .first();
 
     // Jika request tidak ditemukan
     if (!request) {
@@ -240,6 +249,10 @@ export async function getRequestWithDetails(requestId: string): Promise<{
     // Menggabungkan data request, komentar, dan jumlah votes
     const requestWithDetails: RequestWithDetails = {
       ...request,
+      user: {
+        name: request.user_name,
+        avatar: request.user_avatar,
+      },
       comments,
       vote_count: voteCount,
     };
