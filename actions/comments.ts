@@ -4,26 +4,21 @@ import { generateUUID } from "@/lib/helper";
 
 export async function addCommentToRequest(
   prev: any,
-  requestId: string,
-  content: string,
   formData: FormData
-): Promise<{
-  success: boolean;
-  errors?: { _form?: string[] };
-}> {
-  try {
-    // Verifikasi session user
-    const session = await verifySession();
-    if (!session.isAuth) {
-      return {
-        success: false,
-        errors: {
-          _form: ["You must be logged in to comment."],
-        },
-      };
-    }
+): Promise<any> {
+  const session = await verifySession();
+  if (!session.isAuth) {
+    return {
+      success: false,
+      errors: {
+        _form: ["You must be logged in to comment."],
+      },
+    };
+  }
 
+  try {
     const content = formData.get("content") as string;
+    const requestId = formData.get("requestId") as string;
 
     // Validasi konten komentar
     if (!content || content.trim().length === 0) {

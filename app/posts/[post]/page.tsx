@@ -2,16 +2,15 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import { getRequestWithDetails } from "@/actions/requests";
 import MyAvatar from "@/components/ui/MyAvatar";
-import CreateComment from "@/components/forms/createComment";
+import CreateComment from "@/components/forms/CreateComment";
 
 export default async function PostDetail({
   params,
 }: {
-  params: { "id-post": string };
+  params: Promise<{ post: string }>;
 }) {
-  const response = await getRequestWithDetails(params["id-post"]);
-  console.log(response);
-  const id_post = (await params)["id-post"];
+  const postId = (await params).post;
+  const response = await getRequestWithDetails(postId);
 
   if (!response.success || !response.data) {
     return (
@@ -61,7 +60,7 @@ export default async function PostDetail({
           {/* Add Comment */}
           <div className="flex gap-4 mb-6">
             <MyAvatar />
-            <CreateComment requestId={id_post} />
+            <CreateComment requestId={postId} />
           </div>
 
           {/* Comments List */}

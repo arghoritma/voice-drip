@@ -158,7 +158,9 @@ export async function googleSignin(payload: any) {
       });
     }
     await createSession(uid);
-    redirect("/dashboard");
+    return {
+      success: true,
+    };
   } catch (error) {
     console.error("Error during Google sign-in:", error);
     return {
@@ -170,6 +172,8 @@ export async function googleSignin(payload: any) {
 }
 
 export async function logout() {
-  deleteSession();
-  redirect("/auth/login");
+  await deleteSession();
+  return {
+    success: true,
+  };
 }

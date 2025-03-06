@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import MyAvatar from "@/components/ui/MyAvatar";
-import CreateRequestForm from "./forms/createPost";
+import CreateRequestForm from "@/components/forms/CreatePost";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function CreatePost() {
             <MyAvatar />
             <input
               type="text"
-              placeholder="Share your thoughts..."
+              placeholder="Bagikan permintaan fitur, (bug report), atau (improvement) yang anda inginkan..."
               className="input input-bordered w-full"
               onClick={() => setIsModalOpen(true)}
             />

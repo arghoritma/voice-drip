@@ -1,70 +1,61 @@
-import React, { useEffect } from "react";
-import { addCommentToRequest } from "@/actions/comments";
-import { useActionState } from "react";
+"use client";
+
+import React, { useState } from "react";
 
 interface CreateCommentProps {
   requestId: string;
   onSuccess?: () => void;
 }
 
-interface CommentState {
-  errors: {
-    _form?: string;
-  };
-  success: boolean;
-}
-
 export default function CreateComment({
   requestId,
   onSuccess,
 }: CreateCommentProps) {
-  const initialState: CommentState = { errors: {}, success: false };
-  const [state, formAction, isPending] = useActionState(
-    (state: CommentState, formData: FormData) => {
-      formData.append("requestId", requestId);
-      return addCommentToRequest(
-        requestId,
-        formData.get("content") as string,
-        formData,
-        state
-      );
-    },
-    initialState
-  );
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (state.success) {
-      onSuccess && onSuccess();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const response = await fetch("/api/comments", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        if (onSuccess) {
+          onSuccess();
+        }
+        (e.target as HTMLFormElement).reset();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }, [state.success, onSuccess]);
+  };
 
   return (
     <div className="flex-1">
-      <form action={formAction}>
-        {state?.errors?._form && (
-          <div className="text-error mb-2">{state.errors._form}</div>
-        )}
+      <form onSubmit={handleSubmit}>
         <textarea
           name="content"
           className="textarea textarea-bordered w-full"
           placeholder="Add a comment..."
           rows={3}
           required
-          disabled={isPending}
+          disabled={isLoading}
         ></textarea>
+        <input type="hidden" name="requestId" value={requestId} />
         <button
           type="submit"
           className="btn btn-primary mt-2"
-          disabled={isPending}
+          disabled={isLoading}
         >
-          {isPending ? (
-            <>
-              <span className="loading loading-spinner"></span>
-              Posting...
-            </>
-          ) : (
-            "Post Comment"
-          )}
+          {isLoading ? "Posting..." : "Post Comment"}
         </button>
       </form>
     </div>

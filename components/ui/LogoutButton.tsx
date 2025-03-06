@@ -10,7 +10,10 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await logout();
+      const response = await logout();
+      if (response.success) {
+        window.location.href = "/";
+      }
     } finally {
       setLoading(false);
     }
