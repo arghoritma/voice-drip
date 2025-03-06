@@ -18,7 +18,19 @@ export default function PostCard({ item }: PostCardProps) {
               </p>
             </div>
           </div>
-          <div className="badge badge-primary">{item.type}</div>
+          <div
+            className={`badge ${
+              item.type === "bug"
+                ? "badge-error"
+                : item.type === "feature"
+                ? "badge-primary"
+                : item.type === "improvement"
+                ? "badge-success"
+                : "badge-neutral"
+            }`}
+          >
+            {item.type}
+          </div>
         </div>
         <h2 className="card-title mt-4">{item.title}</h2>
         <p>{item.description}</p>
