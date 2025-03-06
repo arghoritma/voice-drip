@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useActionState } from "react";
 import { createRequest } from "@/actions/requests";
 
-export default function CreateRequestForm() {
+export default function CreateRequestForm({
+  onSuccess,
+}: {
+  onSuccess?: () => void;
+}) {
   const initialState = { errors: {}, success: false };
   const [state, formAction, isPending] = useActionState(
     createRequest,
     initialState
   );
+
+  // Mendeteksi ketika form berhasil
+  useEffect(() => {
+    if (state.success) {
+      onSuccess && onSuccess();
+    }
+  }, [state.success, onSuccess]);
 
   return (
     <form action={formAction}>

@@ -3,7 +3,7 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
-import { Request, CommentWithUser, RequestWithDetails } from "@/type";
+import { Request, RequestWithDetails } from "@/types";
 
 export async function createRequest(
   prev: any,
@@ -13,8 +13,8 @@ export async function createRequest(
   if (!session.isAuth) {
     return {
       errors: {
-        _form: ["You must be logged in to create a request"]
-      }
+        _form: ["You must be logged in to create a request"],
+      },
     };
   }
 
@@ -25,15 +25,15 @@ export async function createRequest(
   if (!title || !description || !type) {
     return {
       errors: {
-        _form: ["Please fill in all required fields"]
-      }
+        _form: ["Please fill in all required fields"],
+      },
     };
   }
 
   try {
     const requestId = generateUUID();
 
-    await db.transaction(async trx => {
+    await db.transaction(async (trx) => {
       // Insert the request
       await trx("requests").insert({
         id: requestId,
@@ -43,7 +43,7 @@ export async function createRequest(
         status: "submitted",
         created_at: new Date(),
         updated_at: new Date(),
-        user_id: session.userId
+        user_id: session.userId,
       });
 
       // Log the activity
@@ -54,51 +54,112 @@ export async function createRequest(
         object_id: requestId,
         activity_type: "created",
         description: `Created new ${type} request: ${title}`,
-        created_at: new Date()
+        created_at: new Date(),
       });
     });
 
     return {
       success: true,
-      errors: {}
+      errors: {},
     };
   } catch (error) {
     console.error("Error creating request:", error);
     return {
       errors: {
-        _form: ["Failed to create request. Please try again."]
-      }
+        _form: ["Failed to create request. Please try again."],
+      },
     };
   }
 }
-
-export async function getRequests(): Promise<{
+export async function getRequests(userId?: string): Promise<{
   success: boolean;
-  data?: Request[];
+  data?: {
+    id: string;
+    user: {
+      name: string;
+      avatar: string;
+    };
+    created_at: string;
+    type: string;
+    title: string;
+    description: string;
+    status: string;
+    tags: string[];
+    likes: number;
+    comments: number;
+    isVoted: boolean;
+  }[];
   errors?: { _form?: string[] };
 }> {
   try {
-    // Mengambil data requests dari database
-    const requests = await db("requests")
-      .select("*")
-      .orderBy("created_at", "desc");
+    // Base query without conditional raw statement
+    let requestsQuery = db("requests")
+      .join("users", "requests.user_id", "users.id")
+      .select(
+        "requests.id",
+        "requests.title",
+        "requests.description",
+        "requests.type",
+        "requests.status",
+        "requests.created_at",
+        "users.name as user_name",
+        "users.avatar as user_avatar",
+        db.raw(
+          "(SELECT COUNT(*) FROM request_tags WHERE request_tags.request_id = requests.id) as tags_count"
+        ),
+        db.raw(
+          "(SELECT COUNT(*) FROM votes WHERE votes.request_id = requests.id) as likes"
+        ),
+        db.raw(
+          "(SELECT COUNT(*) FROM comments WHERE comments.request_id = requests.id) as comments_count"
+        )
+      );
 
-    // Mengembalikan data requests
+    // Add is_voted calculation based on userId presence
+    if (userId) {
+      requestsQuery = requestsQuery.select(
+        db.raw(
+          "(SELECT COUNT(*) > 0 FROM votes WHERE votes.request_id = requests.id AND votes.user_id = ?) as is_voted",
+          [userId]
+        )
+      );
+    } else {
+      requestsQuery = requestsQuery.select(db.raw("false as is_voted"));
+    }
+
+    const requests = await requestsQuery.orderBy("requests.created_at", "desc");
+
+    const formattedRequests = requests.map((request) => ({
+      id: request.id,
+      user: {
+        name: request.user_name,
+        avatar: request.user_avatar,
+      },
+      created_at: request.created_at,
+      type: request.type,
+      title: request.title,
+      description: request.description,
+      status: request.status,
+      tags: [],
+      likes: request.likes,
+      comments: request.comments_count,
+      isVoted: request.is_voted,
+    }));
+
     return {
       success: true,
-      data: requests
+      data: formattedRequests,
     };
   } catch (error) {
     console.error("Error fetching requests:", error);
     return {
       success: false,
       errors: {
-        _form: ["Failed to fetch requests. Please try again."]
-      }
+        _form: ["Failed to fetch requests. Please try again."],
+      },
     };
   }
 }
-
 export async function getRequestById(requestId: string): Promise<{
   success: boolean;
   data?: Request;
@@ -113,23 +174,23 @@ export async function getRequestById(requestId: string): Promise<{
       return {
         success: false,
         errors: {
-          _form: ["Request not found."]
-        }
+          _form: ["Request not found."],
+        },
       };
     }
 
     // Mengembalikan data request
     return {
       success: true,
-      data: request
+      data: request,
     };
   } catch (error) {
     console.error("Error fetching request by ID:", error);
     return {
       success: false,
       errors: {
-        _form: ["Failed to fetch request. Please try again."]
-      }
+        _form: ["Failed to fetch request. Please try again."],
+      },
     };
   }
 }
@@ -148,8 +209,8 @@ export async function getRequestWithDetails(requestId: string): Promise<{
       return {
         success: false,
         errors: {
-          _form: ["Request not found."]
-        }
+          _form: ["Request not found."],
+        },
       };
     }
 
@@ -179,21 +240,21 @@ export async function getRequestWithDetails(requestId: string): Promise<{
     const requestWithDetails: RequestWithDetails = {
       ...request,
       comments,
-      vote_count: voteCount
+      vote_count: voteCount,
     };
 
     // Mengembalikan data request beserta komentar dan jumlah votes
     return {
       success: true,
-      data: requestWithDetails
+      data: requestWithDetails,
     };
   } catch (error) {
     console.error("Error fetching request with details:", error);
     return {
       success: false,
       errors: {
-        _form: ["Failed to fetch request details. Please try again."]
-      }
+        _form: ["Failed to fetch request details. Please try again."],
+      },
     };
   }
 }

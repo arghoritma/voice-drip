@@ -6,7 +6,6 @@ export interface User {
   updated_at?: string;
 }
 
-
 export interface File {
   id: string;
   file_name: string;
@@ -47,4 +46,23 @@ export interface RequestWithDetails {
   user_id: string;
   comments: CommentWithUser[]; // Komentar dengan informasi user
   vote_count: number;
+}
+
+export interface PostCardProps {
+  item: {
+    id: string;
+    user: {
+      name: string;
+      avatar: string;
+    };
+    created_at: string;
+    type: string;
+    title: string;
+    description: string;
+    status: string;
+    tags: string[];
+    likes: number;
+    comments: number;
+    isVoted: boolean;
+  };
 }

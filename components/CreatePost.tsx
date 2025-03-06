@@ -1,11 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyAvatar from "@/components/ui/MyAvatar";
 import CreateRequestForm from "./forms/createPost";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+
+  useEffect(() => {
+    if (formSuccess) {
+      // Tutup modal
+      setIsModalOpen(false);
+      // Reset state
+      setFormSuccess(false);
+      // Reload halaman
+      window.location.reload();
+    }
+  }, [formSuccess]);
 
   return (
     <>
@@ -36,7 +48,7 @@ export default function CreatePost() {
         <dialog open className="modal backdrop-blur-sm">
           <div className="modal-box">
             <div className="flex justify-between items-center">
-              <h3 className="font-bold text-lg">Create Post</h3>
+              <h3 className="font-bold text-lg">Create Post Request</h3>
               <button
                 className="btn btn-sm btn-circle"
                 onClick={() => setIsModalOpen(false)}
@@ -44,7 +56,7 @@ export default function CreatePost() {
                 ✕
               </button>
             </div>
-            <CreateRequestForm />
+            <CreateRequestForm onSuccess={() => setFormSuccess(true)} />
           </div>
           <form method="dialog" className="modal-backdrop">
             <button onClick={() => setIsModalOpen(false)}>close</button>

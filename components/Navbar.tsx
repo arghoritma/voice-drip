@@ -7,12 +7,12 @@ export default async function Navbar() {
   return (
     <div className="navbar bg-base-100 text-base-content sticky top-0 z-50 glass ">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Voices Drip</a>
+        <a className="btn btn-ghost text-xl">Voice Drip</a>
       </div>
       <div className="flex-none">
         {isAuth ? (
           <>
-            <NotifNavbar />
+            {/* <NotifNavbar /> */}
             <ProfilNavbar />
           </>
         ) : (

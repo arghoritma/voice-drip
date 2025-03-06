@@ -1,11 +1,12 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
+import { generateUUID } from "@/lib/helper";
 
-export async function addVoteToRequest(
-  requestId: string
-): Promise<{
+export async function addVoteToRequest(requestId: string): Promise<{
   success: boolean;
-  errors?: { _form?: string[] };
+  errors?: {
+    _form: string[];
+  };
 }> {
   try {
     // Verifikasi session user
@@ -38,10 +39,10 @@ export async function addVoteToRequest(
 
     // Tambahkan vote baru
     await db("votes").insert({
-      id: generateUUID(), // Fungsi untuk menghasilkan UUID
+      id: generateUUID(),
       request_id: requestId,
       user_id: session.userId,
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     });
 
     return {

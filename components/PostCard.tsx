@@ -1,24 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@/components/ui/Avatar";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
-
-interface PostCardProps {
-  item: {
-    id: number;
-    user: {
-      name: string;
-      avatar: string;
-    };
-    created_at: string;
-    type: string;
-    title: string;
-    description: string;
-    status: string;
-    tags: string[];
-    likes: number;
-    comments: number;
-  };
-}
+import { PostCardProps } from "@/types";
+import Like from "./forms/Like";
 
 export default function PostCard({ item }: PostCardProps) {
   return (
@@ -46,16 +30,18 @@ export default function PostCard({ item }: PostCardProps) {
           ))}
         </div>
         <div className="flex justify-end gap-2 items-center mt-4 pt-4 border-t">
+          <Like item={item.likes} islike={item.isVoted} />
           <button className="btn btn-ghost btn-sm gap-2">
-            <Heart size={18} /> {item.likes}
-          </button>
-          <button className="btn btn-ghost btn-sm gap-2">
-            <MessageCircle size={18} /> {item.comments}
+            <MessageCircle
+              fill={item.comments > 0 ? "currentColor" : "none"}
+              size={18}
+            />{" "}
+            {item.comments > 0 && item.comments}
           </button>
           <button className="btn btn-ghost btn-sm">
             <Share2 size={18} />
           </button>
-        </div>{" "}
+        </div>
       </div>
     </div>
   );

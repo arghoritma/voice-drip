@@ -16,21 +16,21 @@ export default function Sidebar() {
               Feed
             </Link>
             <Link
-              href="/features"
+              href="/"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
               <Lightbulb size={20} />
               Features
             </Link>
             <Link
-              href="/bugs"
+              href="/"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
               <Bug size={20} />
               Bug Reports
             </Link>
             <Link
-              href="/requests"
+              href="/"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
               <FileQuestion size={20} />
