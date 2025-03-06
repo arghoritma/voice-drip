@@ -14,3 +14,14 @@ export interface File {
   uploaded_by: string;
   uploaded_at: string;
 }
+
+export interface Request {
+  id: string;
+  title: string;
+  description: string;
+  type: "feature" | "bug" | "improvement";
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+  user_id: string;
+}
