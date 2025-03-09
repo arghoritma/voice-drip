@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { AlertCircle, Eye, EyeOff, LogIn, Mail } from "lucide-react";
 import { signin } from "@/actions/auth";
 import { FormState } from "@/lib/definitions";
@@ -14,6 +14,12 @@ export default function LoginForm() {
   };
 
   const [state, actionLogin, isPending] = useActionState(signin, initialState);
+
+  useEffect(() => {
+    if (state.success) {
+      window.location.reload();
+    }
+  }, [state]);
 
   return (
     <form className="mt-8 space-y-6" action={actionLogin}>
@@ -92,7 +98,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary w-full flex justify-center items-center gap-2"
         >
           {isPending ? (
             <>
@@ -103,22 +109,6 @@ export default function LoginForm() {
             "Sign In"
           )}
         </button>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="text-sm">
-          <a
-            href="/auth/register"
-            className="hover:text-foreground hover:underline"
-          >
-            Don't have an account?
-          </a>
-        </div>
-        <div className="text-sm">
-          <a href="#" className="hover:text-foreground hover:underline">
-            Forgot password?
-          </a>
-        </div>
       </div>
     </form>
   );

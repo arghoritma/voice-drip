@@ -8,8 +8,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string("phone");
     table.string("password_has");
     table.string("avatar");
-    table.datetime("created_at").defaultTo(knex.fn.now());
+    table.datetime("created_at");
     table.datetime("updated_at");
+    table.string("role").defaultTo("user");
   });
 }
 

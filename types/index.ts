@@ -71,3 +71,76 @@ export interface PostCardProps {
     isVoted: boolean;
   };
 }
+
+export interface Platform {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+}
+export interface RequestType {
+  type: "feature" | "bug" | "improvement";
+}
+
+export interface RequestStatus {
+  status: "submitted" | "in_progress" | "completed" | "rejected";
+}
+
+export interface RequestResponse {
+  success: boolean;
+  data?: Request | RequestWithDetails;
+  errors?: {
+    _form?: string[];
+  };
+}
+
+export interface RequestListResponse {
+  success: boolean;
+  data?: {
+    id: string;
+    user: {
+      name: string;
+      avatar: string;
+    };
+    created_at: string;
+    type: string;
+    title: string;
+    description: string;
+    status: string;
+    tags: string[];
+    likes: number;
+    comments: number;
+    isVoted: boolean;
+  }[];
+  errors?: {
+    _form?: string[];
+  };
+}
+
+export interface CreateRequestData {
+  title: string;
+  description: string;
+  type: RequestType;
+  platform_id?: string;
+}
+
+export interface PlatformProps {
+  id: string;
+  name: string;
+  logo: string;
+  total_requests: number;
+  total_votes: number;
+  total_users: number;
+}
+
+export interface TrendingRequestProps {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  status: string;
+  created_at: string;
+  platform_name: string;
+  vote_count: number;
+  comment_count: number;
+}

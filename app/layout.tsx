@@ -5,6 +5,9 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import RightSideBar from "@/components/RightSideBar";
 import MobileNavigation from "@/components/MobileNavigation";
+import { verifySession } from "@/lib/dal";
+import CreatePost from "@/components/CreatePost";
+import AuthModal from "@/components/AuthModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +24,13 @@ export const metadata: Metadata = {
   description: "Voice Drip is a platform for sharing your thoughts and ideas.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isAuth } = await verifySession();
+
   return (
     <html lang="en">
       <body
@@ -40,8 +45,12 @@ export default function RootLayout({
 
               {/* Mobile Navigation */}
               <MobileNavigation />
-              <div className="col-span-1 md:col-span-6">{children}</div>
-              {/* <RightSideBar /> */}
+              <div className="col-span-1 md:col-span-6">
+                {isAuth && <CreatePost />}
+                {children}
+                <AuthModal />
+              </div>
+              <RightSideBar />
             </div>
           </div>
         </main>

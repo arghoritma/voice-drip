@@ -16,9 +16,14 @@ export default async function Navbar() {
             <ProfilNavbar />
           </>
         ) : (
-          <a href="/auth/login" className="btn btn-primary btn-md rounded-md">
-            Add Issue
-          </a>
+          <>
+            <label
+              htmlFor="auth_modal"
+              className="btn btn-primary btn-md rounded-md"
+            >
+              Add Issue
+            </label>
+          </>
         )}
       </div>
     </div>

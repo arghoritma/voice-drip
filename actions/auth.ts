@@ -5,29 +5,16 @@ import { generateUUID } from "@/lib/helper";
 import db from "@/services/db";
 import bcrypt from "bcrypt";
 import { createSession, deleteSession } from "@/lib/session";
-import { redirect } from "next/navigation";
 
 export async function signup(
   prev: FormState,
   formData: FormData
 ): Promise<FormState> {
-  // Validate form fields
-  const validatedFields = SignupFormSchema.safeParse({
-    name: formData.get("name"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
-
-  // If any form fields are invalid, return early
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
-
   try {
-    const { name, email, password } = validatedFields.data;
-    console.log("name", name);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const avatarUrl = "https://ui-avatars.com/api/?name=";
 
     // Check if email already exists
     const existingUser = await db("users").where({ email }).first();
@@ -44,20 +31,18 @@ export async function signup(
     const userId = generateUUID();
 
     // Use transaction for atomic operation
-    await db.transaction(async (trx) => {
-      await trx("users").insert({
-        id: userId,
-        email: email,
-        name: name,
-        password: await bcrypt.hash(password, 10),
-        created_at: new Date(),
-        updated_at: new Date(),
-        role: "user",
-      });
+    await db("users").insert({
+      id: userId,
+      email: email,
+      name: name,
+      avatar: `${avatarUrl}${name}`,
+      password_has: await bcrypt.hash(password, 10),
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     await createSession(userId);
-    redirect("/dashboard");
+    return { success: true };
   } catch (error) {
     if (error instanceof Error) {
       if (
@@ -87,7 +72,6 @@ export async function signup(
     };
   }
 }
-
 export async function signin(
   prev: FormState,
   formData: FormData
@@ -119,7 +103,7 @@ export async function signin(
     }
 
     // Compare passwords
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password_has);
 
     // If password doesn't match
     if (!passwordMatch) {
@@ -131,7 +115,9 @@ export async function signin(
     }
 
     await createSession(user.id);
-    redirect("/dashboard");
+    return {
+      success: true,
+    };
   } catch (error) {
     return {
       errors: {

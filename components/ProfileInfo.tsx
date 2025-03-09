@@ -9,7 +9,10 @@ interface ProfileProps {
 }
 
 export default function ProfileInfo() {
-  const [user, setUser] = useState<ProfileProps>({ name: "", email: "" });
+  const [user, setUser] = useState<ProfileProps>({
+    name: "name",
+    email: "email",
+  });
 
   useEffect(() => {
     const gethUser = async () => {

@@ -10,6 +10,7 @@ export function useGoogleAuth() {
 
   const googleLogin = async () => {
     setLoading(true);
+    const avatarUrl = "https://ui-avatars.com/api/?name=";
     try {
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
@@ -18,9 +19,7 @@ export function useGoogleAuth() {
         email: user.email,
         name: user.displayName,
         uid: user.uid,
-        Avatar:
-          user.photoURL ||
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s",
+        Avatar: user.photoURL || `${avatarUrl}${user.displayName}`,
       };
 
       const response = await googleSignin(payload);

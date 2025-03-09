@@ -18,6 +18,11 @@ export async function up(knex: Knex): Promise<void> {
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table.timestamp("updated_at");
     table.integer("user_id").notNullable().references("id").inTable("users");
+    table
+      .string("platform_id")
+      .notNullable()
+      .references("id")
+      .inTable("platforms");
   });
 }
 

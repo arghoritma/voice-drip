@@ -77,6 +77,7 @@ Table requests {
   created_at timestamp
   updated_at timestamp
   user_id varchar [ref: > users.id]
+  platform_id varchar [ref: > platforms.id]
 }
 
 Enum REQUEST_TYPE {
@@ -162,4 +163,19 @@ Table request_tags {
   indexes {
     (request_id, tag_id) [pk]
   }
+}
+
+Table platforms {
+  id varchar [pk]
+  logo varchar(255)
+  name varchar(255)
+  description text
+}
+
+Table changelogs {
+  id varchar [pk]
+  version varchar(255)
+  description text
+  release_date datetime
+  platform_id varchar [ref: > platforms.id]
 }

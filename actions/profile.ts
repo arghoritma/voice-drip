@@ -72,3 +72,23 @@ export async function getProfile(): Promise<any> {
     };
   }
 }
+
+export async function GetIsAdmin(): Promise<boolean> {
+  const session = await verifySession();
+
+  try {
+    const user = await db("users")
+      .where({ id: session.userId })
+      .select("role")
+      .first();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user.role === "admin";
+  } catch (error) {
+    return false;
+  }
+}
+

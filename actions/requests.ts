@@ -3,15 +3,16 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
-import { Request, RequestWithDetails } from "@/types";
+import { Request, RequestResponse, RequestWithDetails } from "@/types";
 
 export async function createRequest(
-  prev: any,
+  prev: RequestResponse,
   formData: FormData
-): Promise<any> {
+): Promise<RequestResponse> {
   const session = await verifySession();
   if (!session.isAuth) {
     return {
+      success: false,
       errors: {
         _form: ["You must be logged in to create a request"],
       },
@@ -21,9 +22,11 @@ export async function createRequest(
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const type = formData.get("type") as "feature" | "bug" | "improvement";
+  const platformId = formData.get("platform") as string;
 
-  if (!title || !description || !type) {
+  if (!title || !description || !type || !platformId) {
     return {
+      success: false,
       errors: {
         _form: ["Please fill in all required fields"],
       },
@@ -40,6 +43,7 @@ export async function createRequest(
         title,
         description,
         type,
+        platform_id: platformId,
         status: "submitted",
         created_at: new Date(),
         updated_at: new Date(),
@@ -65,6 +69,7 @@ export async function createRequest(
   } catch (error) {
     console.error("Error creating request:", error);
     return {
+      success: false,
       errors: {
         _form: ["Failed to create request. Please try again."],
       },

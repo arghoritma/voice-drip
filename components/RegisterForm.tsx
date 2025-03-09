@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useState, useEffect } from "react";
 import { Eye, EyeOff, AlertCircle, Mail, User, LogIn } from "lucide-react";
 import { signup } from "@/actions/auth";
 import { FormState } from "@/lib/definitions";
@@ -17,6 +17,12 @@ export default function RegisterForm() {
     signup,
     initialState
   );
+
+  useEffect(() => {
+    if (state.success) {
+      window.location.reload();
+    }
+  }, [state]);
   return (
     <form className="mt-8 space-y-6 " action={actionRegister}>
       {state?.errors?._form && (
@@ -109,7 +115,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full flex justify-center items-center py-3 px-4 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary w-full flex justify-center items-center gap-2"
         >
           {isPending ? (
             <>

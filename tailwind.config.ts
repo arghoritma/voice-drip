@@ -10,6 +10,23 @@ export default {
 
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light", "dark"],
+    themes: [
+      {
+        light: {
+          primary: "#00ACEE",
+          secondary: "#60CAF4",
+          accent: "#FCB023",
+          neutral: "#2a323c",
+          "base-100": "#ffffff",
+        },
+        dark: {
+          primary: "#00ACEE",
+          secondary: "#60CAF4",
+          accent: "#FCB023",
+          neutral: "#191e24",
+          "base-100": "#2a323c",
+        },
+      },
+    ],
   },
 } satisfies Config;

@@ -3,10 +3,13 @@
 import React, { useState, useEffect } from "react";
 import MyAvatar from "@/components/ui/MyAvatar";
 import CreateRequestForm from "@/components/forms/CreatePostForm";
+import { getPlatforms } from "@/actions/platforms";
+import { Platform } from "@/types";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
+  const [platforms, setPlatforms] = useState<Platform[]>([]);
 
   useEffect(() => {
     if (formSuccess) {
@@ -14,10 +17,23 @@ export default function CreatePost() {
       setIsModalOpen(false);
       // Reset state
       setFormSuccess(false);
-      // Reload halaman
+
       window.location.reload();
     }
   }, [formSuccess]);
+
+  useEffect(() => {
+    const fetchPlatforms = async () => {
+      try {
+        const platforms = await getPlatforms();
+        setPlatforms(platforms as Platform[]);
+      } catch (error) {
+        console.error("Error fetching platforms:", error);
+      }
+    };
+
+    fetchPlatforms();
+  }, []);
 
   return (
     <>
@@ -56,7 +72,10 @@ export default function CreatePost() {
                 ✕
               </button>
             </div>
-            <CreateRequestForm onSuccess={() => setFormSuccess(true)} />
+            <CreateRequestForm
+              onSuccess={() => setFormSuccess(true)}
+              platforms={platforms}
+            />
           </div>
           <form method="dialog" className="modal-backdrop">
             <button onClick={() => setIsModalOpen(false)}>close</button>

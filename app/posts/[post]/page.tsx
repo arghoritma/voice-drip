@@ -1,4 +1,3 @@
-import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import { getRequestWithDetails } from "@/actions/requests";
 import MyAvatar from "@/components/ui/MyAvatar";
@@ -25,11 +24,14 @@ export default async function PostDetail({
   const post = response.data;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <div className="flex gap-4 mb-6">
-            <Avatar src={post.user?.avatar || ""} className="h-16 w-16" />
+            <Avatar
+              src={post.user?.avatar || undefined}
+              className="h-16 w-16"
+            />
             <div className="flex-1">
               <h4 className="font-bold text-xl">{post.user?.name}</h4>
               <span className="text-sm text-base-content/70">
