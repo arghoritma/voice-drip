@@ -1,5 +1,4 @@
 import ProfilNavbar from "./ProfilNavbar";
-import NotifNavbar from "./NotifNavbar";
 import { verifySession } from "@/lib/dal";
 
 export default async function Navbar() {

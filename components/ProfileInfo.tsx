@@ -2,11 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getProfile } from "@/actions/profile";
-
-interface ProfileProps {
-  name: string;
-  email: string;
-}
+import { ProfileProps } from "@/types";
 
 export default function ProfileInfo() {
   const [user, setUser] = useState<ProfileProps>({
@@ -18,7 +14,7 @@ export default function ProfileInfo() {
     const gethUser = async () => {
       try {
         const profile = await getProfile();
-        setUser(profile);
+        setUser(profile.data);
         console.log(profile);
       } catch (error) {
         console.error("Failed to get user:", error);

@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   webpack: (config) => {
     config.ignoreWarnings = [{ module: /node_modules\/knex/ }];
     config.resolve.fallback = {

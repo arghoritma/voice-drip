@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -10,12 +11,14 @@ export default function ProfilePhoto() {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const profile = await getProfile();
+        const { data: profile } = await getProfile();
 
         if (profile) {
           setAvatar(profile.avatar || "");
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error("Failed to get user:", error);
+      }
     };
     getUserData();
   }, []);
@@ -37,7 +40,9 @@ export default function ProfilePhoto() {
         const data = await response.json();
 
         setAvatar(data.url);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Failed to upload avatar:", error);
+      }
     }
   };
   return (

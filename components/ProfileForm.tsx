@@ -5,6 +5,7 @@ import { updateProfile, getProfile } from "@/actions/profile";
 import { FormState } from "@/lib/definitions";
 import { useActionState } from "react";
 import { AlertCircle } from "lucide-react";
+import { ProfileProps } from "@/types";
 
 export default function ProfileForm() {
   const initialState: FormState = {
@@ -12,7 +13,7 @@ export default function ProfileForm() {
     errors: {},
   };
 
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<ProfileProps>();
   const [state, actionUpdate, isPending] = useActionState(
     updateProfile,
     initialState
@@ -21,7 +22,7 @@ export default function ProfileForm() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const profile = await getProfile();
+        const { data: profile } = await getProfile();
         if (profile) {
           setProfile(profile);
         }

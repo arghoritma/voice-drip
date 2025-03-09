@@ -5,7 +5,7 @@ import { Users, Settings, LineChart, Gamepad } from "lucide-react";
 import { GetIsAdmin } from "@/actions/profile";
 
 export default async function Sidebar() {
-  const isAdmin = await GetIsAdmin();
+  const { isAdmin: isAdmin } = await GetIsAdmin();
 
   return (
     <div className="hidden md:block md:col-span-3">

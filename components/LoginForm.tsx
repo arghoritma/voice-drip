@@ -31,8 +31,8 @@ export default function LoginForm() {
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
-            Email Address
+          <label htmlFor="email" className="label">
+            <span className="label-text">Email Address</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -42,7 +42,7 @@ export default function LoginForm() {
               id="email"
               name="email"
               type="email"
-              className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              className="input input-bordered w-full pl-10"
               placeholder="you@example.com"
               required
             />
@@ -53,8 +53,8 @@ export default function LoginForm() {
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-1">
-            Password
+          <label htmlFor="password" className="label">
+            <span className="label-text">Password</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -66,7 +66,7 @@ export default function LoginForm() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              className="input input-bordered w-full pl-10 pr-10"
               placeholder="••••••••"
               required
             />
@@ -98,11 +98,11 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="btn btn-primary w-full flex justify-center items-center gap-2"
+          className="btn btn-primary w-full"
         >
           {isPending ? (
             <>
-              <span className="h-5 w-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
+              <span className="loading loading-spinner loading-sm"></span>
               Processing...
             </>
           ) : (

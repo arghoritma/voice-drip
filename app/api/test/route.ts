@@ -14,7 +14,7 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
-        error: "Authentication failed",
+        error: error,
       },
       { status: 401 }
     );

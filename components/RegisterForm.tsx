@@ -24,7 +24,7 @@ export default function RegisterForm() {
     }
   }, [state]);
   return (
-    <form className="mt-8 space-y-6 " action={actionRegister}>
+    <form className="mt-8 space-y-6" action={actionRegister}>
       {state?.errors?._form && (
         <div role="alert" className="alert alert-error">
           <AlertCircle className="h-5 w-5" />
@@ -33,8 +33,8 @@ export default function RegisterForm() {
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="username" className="block text-sm font-medium mb-1">
-            Name
+          <label htmlFor="username" className="label">
+            <span className="label-text">Name</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -44,19 +44,19 @@ export default function RegisterForm() {
               id="name"
               name="name"
               type="text"
-              className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              className="input input-bordered w-full pl-10"
               placeholder="johndoe"
               required
             />
           </div>
           {state.errors?.name && (
-            <div className="text-error text-sm ">{state.errors.name}</div>
+            <div className="text-error text-sm">{state.errors.name}</div>
           )}
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
-            Email Address
+          <label htmlFor="email" className="label">
+            <span className="label-text">Email Address</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -66,19 +66,19 @@ export default function RegisterForm() {
               id="email"
               name="email"
               type="email"
-              className="block w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              className="input input-bordered w-full pl-10"
               placeholder="you@example.com"
               required
             />
           </div>
           {state.errors?.email && (
-            <div className="text-error text-sm ">{state.errors.email}</div>
+            <div className="text-error text-sm">{state.errors.email}</div>
           )}
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-1">
-            Password
+          <label htmlFor="password" className="label">
+            <span className="label-text">Password</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -90,7 +90,7 @@ export default function RegisterForm() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-foreground focus:border-foreground placeholder:text-muted-foreground"
+              className="input input-bordered w-full pl-10 pr-10"
               placeholder="••••••••"
               required
             />
@@ -115,11 +115,11 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="btn btn-primary w-full flex justify-center items-center gap-2"
+          className="btn btn-primary w-full"
         >
           {isPending ? (
             <>
-              <span className="h-5 w-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
+              <span className="loading loading-spinner loading-sm"></span>
               Processing...
             </>
           ) : (

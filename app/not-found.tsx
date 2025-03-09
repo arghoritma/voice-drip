@@ -2,6 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function NotFound() {
   const pathname = usePathname();
@@ -16,9 +17,9 @@ export default function NotFound() {
             <p>Page not found: {pathname}</p>
           </div>
           <div className="mt-8">
-            <a href="/" className="btn btn-primary">
+            <Link href="/" className="btn btn-primary">
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import Avatar from "@/components/ui/Avatar";
-import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { MessageCircle, Share2 } from "lucide-react";
 import { PostCardProps } from "@/types";
 import Like from "./forms/Like";
 import Link from "next/link";

@@ -161,3 +161,10 @@ export interface RequestDetailsProps {
   comments: number;
   isVoted: boolean;
 }
+
+export interface ProfileProps {
+  name: string;
+  email: string;
+  phone?: string;
+  avatar?: string;
+}

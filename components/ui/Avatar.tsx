@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 interface AvatarProps {
   className?: string;
   src?: string;

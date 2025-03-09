@@ -3,7 +3,6 @@ import "server-only";
 import { cookies, headers } from "next/headers";
 import { decrypt } from "@/lib/session";
 import { cache } from "react";
-import { redirect } from "next/navigation";
 import db from "@/services/db";
 
 export const verifySession = cache(async () => {

@@ -1,11 +1,10 @@
 "use server";
 
 import { verifySession } from "@/lib/dal";
-import { FormState, ProfileResponse } from "@/lib/definitions";
+import { FormState } from "@/lib/definitions";
 import db from "@/services/db";
-import bcrypt from "bcrypt";
+import { ProfileProps } from "@/types";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function updateProfile(
   prev: FormState,
@@ -47,33 +46,44 @@ export async function updateProfile(
   } catch (error) {
     return {
       errors: {
-        _form: ["Failed to update profile. Please try again."],
+        _form: [
+          "Failed to update profile. Please try again.",
+          error instanceof Error ? error.message : "Unknown error",
+        ],
       },
     };
   }
 }
-export async function getProfile(): Promise<any> {
+export async function getProfile(): Promise<{
+  success: boolean;
+  data: ProfileProps;
+  error?: Error;
+}> {
   const session = await verifySession();
 
   try {
+    if (!session.isAuth) {
+      throw new Error("User not found");
+    }
     const user = await db("users")
       .where({ id: session.userId })
       .select("name", "email", "phone", "avatar")
       .first();
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    return { ...user };
+    return { success: true, data: user };
   } catch (error) {
     return {
-      error: error,
+      success: false,
+      error: error as Error,
+      data: { name: "", email: "" },
     };
   }
 }
 
-export async function GetIsAdmin(): Promise<boolean> {
+export async function GetIsAdmin(): Promise<{
+  isAdmin: boolean;
+  error?: Error;
+}> {
   const session = await verifySession();
 
   try {
@@ -86,9 +96,13 @@ export async function GetIsAdmin(): Promise<boolean> {
       throw new Error("User not found");
     }
 
-    return user.role === "admin";
+    return {
+      isAdmin: user.role === "admin",
+    };
   } catch (error) {
-    return false;
+    return {
+      error: error as Error,
+      isAdmin: false,
+    };
   }
 }
-

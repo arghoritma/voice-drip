@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -8,7 +9,7 @@ export default function Avatar() {
   const [avatar, setAvatar] = useState<string | null>(null);
   useEffect(() => {
     const getAvatar = async () => {
-      const action = await getProfile();
+      const { data: action } = await getProfile();
       if (action.avatar) {
         setAvatar(action.avatar);
         console.log(action.avatar);
