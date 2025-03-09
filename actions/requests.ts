@@ -3,7 +3,7 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
-import { Request, RequestResponse, RequestWithDetails } from "@/types";
+import { Request, RequestDetailsProps, RequestResponse, RequestWithDetails } from "@/types";
 
 export async function createRequest(
   prev: RequestResponse,
@@ -79,22 +79,7 @@ export async function createRequest(
 
 export async function getRequests(): Promise<{
   success: boolean;
-  data?: {
-    id: string;
-    user: {
-      name: string;
-      avatar: string;
-    };
-    created_at: string;
-    type: string;
-    title: string;
-    description: string;
-    status: string;
-    tags: string[];
-    likes: number;
-    comments: number;
-    isVoted: boolean;
-  }[];
+  data?: RequestDetailsProps[];
   errors?: { _form?: string[] };
 }> {
   const session = await verifySession();
@@ -167,6 +152,7 @@ export async function getRequests(): Promise<{
     };
   }
 }
+
 export async function getRequestById(requestId: string): Promise<{
   success: boolean;
   data?: Request;

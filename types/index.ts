@@ -144,3 +144,20 @@ export interface TrendingRequestProps {
   vote_count: number;
   comment_count: number;
 }
+
+export interface RequestDetailsProps {
+  id: string;
+  user: {
+    name: string;
+    avatar: string;
+  };
+  created_at: string;
+  type: string;
+  title: string;
+  description: string;
+  status: string;
+  tags: string[];
+  likes: number;
+  comments: number;
+  isVoted: boolean;
+}
