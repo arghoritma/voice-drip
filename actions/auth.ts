@@ -1,10 +1,11 @@
 "use server";
 
-import { SignupFormSchema, FormState } from "@/lib/definitions";
+import { FormState } from "@/lib/definitions";
 import { generateUUID } from "@/lib/helper";
 import db from "@/services/db";
 import bcrypt from "bcrypt";
 import { createSession, deleteSession } from "@/lib/session";
+import { PayloadGoogleSign } from "@/types";
 
 export async function signup(
   prev: FormState,
@@ -121,13 +122,16 @@ export async function signin(
   } catch (error) {
     return {
       errors: {
-        _form: ["An error occurred during sign in. Please try again."],
+        _form: [
+          "An error occurred during sign in. Please try again.",
+          error as string,
+        ],
       },
     };
   }
 }
 
-export async function googleSignin(payload: any) {
+export async function googleSignin(payload: PayloadGoogleSign) {
   const { email, name, uid, Avatar } = payload;
   try {
     const existingUser = await db("users").where({ email }).first();

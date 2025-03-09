@@ -168,3 +168,10 @@ export interface ProfileProps {
   phone?: string;
   avatar?: string;
 }
+
+export interface PayloadGoogleSign {
+  email: string;
+  name: string;
+  uid: string;
+  Avatar: string;
+}

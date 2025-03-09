@@ -1,8 +1,16 @@
 "use client";
 import { useGoogleAuth } from "@/hooks/useGoogleAuth";
+import { useEffect } from "react";
 
 export default function GoogleLogin() {
-  const { googleLogin, loading } = useGoogleAuth();
+  const { googleLogin, loading, success } = useGoogleAuth();
+
+  useEffect(() => {
+    if (success) {
+      window.location.reload();
+    }
+  }, [success]);
+
   return (
     <button
       onClick={googleLogin}
