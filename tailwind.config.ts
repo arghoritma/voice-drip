@@ -13,18 +13,15 @@ export default {
     themes: [
       {
         light: {
-          primary: "#00ACEE",
-          secondary: "#60CAF4",
-          accent: "#FCB023",
-          neutral: "#2a323c",
-          "base-100": "#ffffff",
-        },
-        dark: {
-          primary: "#00ACEE",
-          secondary: "#60CAF4",
-          accent: "#FCB023",
-          neutral: "#191e24",
-          "base-100": "#2a323c",
+          primary: "#FF3366", // Warna gradasi pink-merah
+          secondary: "#2E1A47", // Background gelap
+          accent: "#FF647F",
+          neutral: "#1C1C1E",
+          "base-100": "#2E1A47",
+          info: "#3ABFF8",
+          success: "#36D399",
+          warning: "#FBBD23",
+          error: "#F87272",
         },
       },
     ],

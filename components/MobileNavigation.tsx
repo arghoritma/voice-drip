@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { UserCircle, Filter } from "lucide-react";
+import { Home, Lightbulb, Bug } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function MobileNavigation() {
@@ -12,13 +12,13 @@ export default function MobileNavigation() {
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-base-100 shadow-lg p-4 z-50">
       <div className="flex justify-around items-center">
         <Link
-          href="/feed"
+          href="/"
           className={`flex flex-col items-center gap-1 ${
-            pathname === "/feed" ? "text-primary" : ""
+            pathname === "/" ? "text-primary" : ""
           }`}
         >
-          <UserCircle />
-          <span className="text-xs">Feed</span>
+          <Home />
+          <span className="text-xs">Home</span>
         </Link>
         <Link
           href="/features"
@@ -26,7 +26,7 @@ export default function MobileNavigation() {
             pathname === "/features" ? "text-primary" : ""
           }`}
         >
-          <Filter />
+          <Lightbulb />
           <span className="text-xs">Features</span>
         </Link>
         <Link
@@ -35,17 +35,8 @@ export default function MobileNavigation() {
             pathname === "/bugs" ? "text-primary" : ""
           }`}
         >
-          <Filter />
-          <span className="text-xs">Bugs</span>
-        </Link>
-        <Link
-          href="/requests"
-          className={`flex flex-col items-center gap-1 ${
-            pathname === "/requests" ? "text-primary" : ""
-          }`}
-        >
-          <Filter />
-          <span className="text-xs">Requests</span>
+          <Bug />
+          <span className="text-xs">Bug Reports</span>
         </Link>
       </div>
     </div>

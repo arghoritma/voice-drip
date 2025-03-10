@@ -2,23 +2,43 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Nextar",
-    short_name: "Nextar",
+    name: "Drip Voice",
+    short_name: "drip voice",
     description:
-      "Nextar is a modern template for fullstack web application development using Next.js, React, and SQLite. The template is flexible and supports changing the database driver to MySQL, PostgreSQL, and others.",
+      "Drip Voice is a platform for sharing your thoughts and ideas.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
+    background_color: "#2E1A47",
     theme_color: "#000000",
     icons: [
       {
-        src: "/maskable_icon_x192.png",
-        sizes: "192x192",
+        purpose: "maskable",
+        sizes: "48x48",
+        src: "maskable_icon_x48.png",
         type: "image/png",
       },
       {
-        src: "/maskable_icon_x512.png",
-        sizes: "512x512",
+        purpose: "maskable",
+        sizes: "72x72",
+        src: "maskable_icon_x72.png",
+        type: "image/png",
+      },
+      {
+        purpose: "maskable",
+        sizes: "96x96",
+        src: "maskable_icon_x96.png",
+        type: "image/png",
+      },
+      {
+        purpose: "maskable",
+        sizes: "128x128",
+        src: "maskable_icon_x128.png",
+        type: "image/png",
+      },
+      {
+        purpose: "maskable",
+        sizes: "192x192",
+        src: "maskable_icon_x192.png",
         type: "image/png",
       },
     ],
