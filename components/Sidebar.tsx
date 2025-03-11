@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Home, Lightbulb, Bug } from "lucide-react";
-import { Users, Settings, LineChart, Gamepad } from "lucide-react";
+import { Users, Settings, LineChart, Gamepad, Rocket } from "lucide-react";
 import { GetIsAdmin } from "@/actions/profile";
 
 export default async function Sidebar() {
@@ -26,6 +26,14 @@ export default async function Sidebar() {
               <Lightbulb size={20} />
               Features
             </Link>
+            <Link
+              href="/improvement"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              <Rocket size={20} />
+              Improvement
+            </Link>
+
             <Link
               href="/bugs"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"

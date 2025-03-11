@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Home, Lightbulb, Bug } from "lucide-react";
+import { Home, Lightbulb, Bug, Rocket, Activity } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function MobileNavigation() {
@@ -10,16 +10,7 @@ export default function MobileNavigation() {
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-base-100 shadow-lg p-4 z-50">
-      <div className="flex justify-around items-center">
-        <Link
-          href="/"
-          className={`flex flex-col items-center gap-1 ${
-            pathname === "/" ? "text-primary" : ""
-          }`}
-        >
-          <Home />
-          <span className="text-xs">Home</span>
-        </Link>
+      <div className="flex justify-around items-center relative">
         <Link
           href="/features"
           className={`flex flex-col items-center gap-1 ${
@@ -27,7 +18,22 @@ export default function MobileNavigation() {
           }`}
         >
           <Lightbulb />
-          <span className="text-xs">Features</span>
+        </Link>
+        <Link
+          href="/improvement"
+          className={`flex flex-col items-center gap-1 ${
+            pathname === "/improvement" ? "text-primary" : ""
+          }`}
+        >
+          <Rocket />
+        </Link>
+        <Link
+          href="/"
+          className={`flex flex-col items-center justify-center bg-primary rounded-full p-4 shadow-lg ${
+            pathname === "/" ? "text-white" : ""
+          }`}
+        >
+          <Home size={24} />
         </Link>
         <Link
           href="/bugs"
@@ -36,7 +42,14 @@ export default function MobileNavigation() {
           }`}
         >
           <Bug />
-          <span className="text-xs">Bug Reports</span>
+        </Link>
+        <Link
+          href="/status"
+          className={`flex flex-col items-center gap-1 ${
+            pathname === "/status" ? "text-primary" : ""
+          }`}
+        >
+          <Activity />
         </Link>
       </div>
     </div>

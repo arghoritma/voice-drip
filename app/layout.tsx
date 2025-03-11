@@ -45,7 +45,8 @@ export default async function RootLayout({
 
               {/* Mobile Navigation */}
               <MobileNavigation />
-              <div className="col-span-1 md:col-span-6">
+
+              <div className="col-span-1 md:col-span-6 pb-20">
                 {isAuth && <CreatePost />}
                 {children}
                 <AuthModal />
