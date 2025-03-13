@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Bug, Rocket, Sparkles } from "lucide-react";
 import { verifySession } from "@/lib/dal";
+import Comment from "@/components/Comment";
 
 dayjs.extend(relativeTime);
 
@@ -53,10 +54,7 @@ export default async function PostDetail({
         <div className="card-body p-4">
           <div className="flex flex-row justify-between items-start gap-2">
             <div className="flex items-center gap-2">
-              <Avatar
-                src={post.user?.avatar}
-                className="h-8 w-8 rounded-full ring-1 ring-base-200"
-              />
+              <Avatar src={post.user?.avatar} />
               <div>
                 <h3 className="font-bold text-base">{post.user?.name}</h3>
                 <p className="text-xs text-base-content/70">
@@ -135,25 +133,17 @@ export default async function PostDetail({
 
           {/* Comments List */}
           <div className="space-y-4">
-            {post.comments?.map((comment) => (
-              <div key={comment.id} className="flex gap-2">
-                <Avatar
-                  src={comment.user_avatar}
-                  className="h-8 w-8 rounded-full ring-1 ring-base-200"
-                />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm">{comment.user_name}</h4>
-                    <p className="text-xs text-base-content/70">
-                      {dayjs(comment.created_at).fromNow()}
-                    </p>
-                  </div>
-                  <p className="mt-1 text-sm text-base-content/80">
-                    {comment.content}
-                  </p>
+            {post.comments
+              ?.sort(
+                (a, b) =>
+                  new Date(b.created_at).getTime() -
+                  new Date(a.created_at).getTime()
+              )
+              .map((comment) => (
+                <div key={comment.id}>
+                  <Comment comment={comment} />
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

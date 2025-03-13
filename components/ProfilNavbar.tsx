@@ -10,7 +10,7 @@ export default function ProfilNavbar() {
       <MyAvatar />
       <ul
         tabIndex={0}
-        className="bg-base-100 text-base-content menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
+        className="bg-base-100 text-base-content menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow-sm"
       >
         <div className="px-4 py-3">
           <ProfileInfo />

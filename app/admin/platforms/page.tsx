@@ -105,7 +105,7 @@ export default function Page() {
       </div>
 
       {isModalOpen && (
-        <dialog open className="modal backdrop-blur-sm">
+        <dialog open className="modal backdrop-blur-xs">
           <div className="modal-box">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg">Add New Platform</h3>

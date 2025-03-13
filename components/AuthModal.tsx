@@ -8,7 +8,7 @@ export default function AuthModal() {
   return (
     <>
       <input type="checkbox" id="auth_modal" className="modal-toggle" />
-      <div className="modal backdrop-blur-sm">
+      <div className="modal backdrop-blur-xs">
         <div className="modal-box">
           <div role="tablist" className="tabs tabs-lifted">
             <input

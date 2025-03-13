@@ -49,7 +49,7 @@ export default function ProfilePhoto() {
     <div className="w-full lg:w-1/3 flex items-center align-middle justify-center">
       <div className="flex flex-col items-center bg-base-200 p-4 sm:p-8 rounded-xl">
         <div className="avatar">
-          <div className="w-32 sm:w-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-4 hover:scale-105 transition-transform">
+          <div className="w-32 sm:w-40 rounded-full ring-3 ring-primary ring-offset-base-100 ring-offset-4 hover:scale-105 transition-transform">
             {avatar ? (
               <img src={avatar} alt="Profile" className="object-cover" />
             ) : (

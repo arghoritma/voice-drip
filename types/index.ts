@@ -29,8 +29,8 @@ export interface CommentWithUser {
   id: string;
   user_id: string;
   content: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   user_name: string; // Nama user
   user_avatar: string; // Avatar user
 }

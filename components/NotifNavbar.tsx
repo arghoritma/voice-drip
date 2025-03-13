@@ -11,7 +11,7 @@ export default function NotifNavbar() {
       </div>
       <div
         tabIndex={0}
-        className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow rounded-xl"
+        className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow-sm rounded-xl"
       >
         <div className="card-body bg-neutral text-neutral-content rounded-xl">
           <span className="text-lg font-bold">Notifications</span>

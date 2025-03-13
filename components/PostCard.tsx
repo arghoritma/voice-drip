@@ -34,10 +34,7 @@ export default function PostCard({ item }: PostCardProps) {
       <div className="card-body p-4">
         <div className="flex flex-row justify-between items-start gap-2">
           <div className="flex items-center gap-2">
-            <Avatar
-              src={item.user.avatar}
-              className="h-8 w-8 rounded-full ring-1 ring-base-200"
-            />
+            <Avatar src={item.user.avatar} />
             <div>
               <h3 className="font-bold text-base">{item.user.name}</h3>
               <p className="text-xs text-base-content/70">

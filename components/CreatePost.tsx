@@ -61,7 +61,7 @@ export default function CreatePost() {
       </div>
 
       {isModalOpen && (
-        <dialog open className="modal backdrop-blur-sm">
+        <dialog open className="modal backdrop-blur-xs">
           <div className="modal-box">
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-lg">Create Post Request</h3>

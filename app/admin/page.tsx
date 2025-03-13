@@ -6,10 +6,10 @@ export default function AdminPage() {
       <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
       {/* User Management Section */}
-      <div className="bg-white p-6 rounded-lg shadow mb-6">
+      <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">User Management</h2>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600">
             Add New User
           </button>
         </div>
@@ -20,9 +20,9 @@ export default function AdminPage() {
             <input
               type="text"
               placeholder="Search users..."
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full p-2 border border-gray-300 rounded-sm focus:outline-hidden focus:border-blue-500"
             />
-            <select className="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            <select className="p-2 border border-gray-300 rounded-sm focus:outline-hidden focus:border-blue-500">
               <option value="null">Filter Role</option>
               <option value="admin">Admin</option>
               <option value="user">User</option>
@@ -83,7 +83,7 @@ export default function AdminPage() {
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-700">Show</span>
-            <select className="border border-gray-300 rounded p-1">
+            <select className="border border-gray-300 rounded-sm p-1">
               <option>10</option>
               <option>25</option>
               <option>50</option>
@@ -91,19 +91,19 @@ export default function AdminPage() {
             <span className="text-sm text-gray-700">entries</span>
           </div>
           <div className="flex gap-2">
-            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+            <button className="px-3 py-1 border rounded-sm hover:bg-gray-100">
               Previous
             </button>
-            <button className="px-3 py-1 border rounded bg-blue-500 text-white">
+            <button className="px-3 py-1 border rounded-sm bg-blue-500 text-white">
               1
             </button>
-            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+            <button className="px-3 py-1 border rounded-sm hover:bg-gray-100">
               2
             </button>
-            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+            <button className="px-3 py-1 border rounded-sm hover:bg-gray-100">
               3
             </button>
-            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+            <button className="px-3 py-1 border rounded-sm hover:bg-gray-100">
               Next
             </button>
           </div>

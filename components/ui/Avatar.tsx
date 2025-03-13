@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 interface AvatarProps {
-  className?: string;
+  w?: number;
   src?: string;
 }
 
-export default function Avatar({ className, src }: AvatarProps) {
+export default function Avatar({ src, w = 10 }: AvatarProps) {
   return (
-    <img
-      loading="lazy"
-      src={src}
-      alt="Profile"
-      className={`w-10 rounded-full object-cover ${className}`}
-    />
+    <div className="avatar">
+      <div className={`w-${w} rounded-full`}>
+        <img loading="lazy" src={src} alt="Profile" />
+      </div>
+    </div>
   );
 }
