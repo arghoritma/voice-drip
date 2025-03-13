@@ -132,7 +132,7 @@ export async function signin(
 }
 
 export async function googleSignin(payload: PayloadGoogleSign) {
-  const { email, name, uid, Avatar } = payload;
+  const { email, name, uid, Avatar }: PayloadGoogleSign = payload;
   try {
     const existingUser = await db("users").where({ email }).first();
 

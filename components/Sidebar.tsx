@@ -8,7 +8,7 @@ export default async function Sidebar() {
   const { isAdmin: isAdmin } = await GetIsAdmin();
 
   return (
-    <div className="hidden md:block md:col-span-3">
+    <div className="hidden md:block md:col-span-2">
       <div className="card bg-base-100 shadow-xl sticky top-20">
         <div className="card-body">
           <div className="space-y-2">
