@@ -1,7 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { Home, Lightbulb, Bug } from "lucide-react";
-import { Users, Settings, LineChart, Gamepad, Rocket } from "lucide-react";
+import {
+  Users,
+  Settings,
+  LineChart,
+  Gamepad,
+  Home,
+  Lightbulb,
+  Bug,
+  Map,
+  TrendingUp,
+} from "lucide-react";
 import { GetIsAdmin } from "@/actions/profile";
 
 export default async function Sidebar() {
@@ -30,10 +39,16 @@ export default async function Sidebar() {
               href="/improvement"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
-              <Rocket size={20} />
+              <TrendingUp size={20} />
               Improvement
             </Link>
-
+            <Link
+              href="/roadmaps"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              <Map size={20} />
+              Roadmaps
+            </Link>
             <Link
               href="/bugs"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
