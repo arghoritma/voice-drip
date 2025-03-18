@@ -15,24 +15,33 @@ export default function Like({ item, islike, requestId }: LikeProps) {
 
   const handleLike = async () => {
     try {
-      const response = await fetch("/api/like", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ requestId }),
-      });
+      // Update UI immediately
+      setIsLiked(!isLiked);
+      setLikes(isLiked ? likes - 1 : likes + 1);
 
-      if (response.ok) {
-        setIsLiked(!isLiked);
-        if (!isLiked) {
-          setLikes(likes + 1);
-        } else {
-          setLikes(likes - 1);
-        }
+      // Then make API call
+      if (!isLiked) {
+        await fetch("/api/like", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ requestId }),
+        });
+      } else {
+        await fetch("/api/unlike", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ requestId }),
+        });
       }
     } catch (error) {
-      console.error("Error liking request:", error);
+      // Revert UI changes if API call fails
+      setIsLiked(isLiked);
+      setLikes(likes);
+      console.error("Error handling like/unlike:", error);
     }
   };
 

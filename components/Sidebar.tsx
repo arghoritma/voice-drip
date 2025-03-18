@@ -56,8 +56,10 @@ export default async function Sidebar() {
               <Bug size={20} />
               Bug Reports
             </Link>
+
             {isAdmin && (
               <>
+                <div className="divider">Admin</div>
                 <Link
                   href="/admin/users"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
@@ -88,7 +90,7 @@ export default async function Sidebar() {
                 </Link>
               </>
             )}
-          </div>
+          </div>{" "}
         </div>
       </div>
     </div>

@@ -179,3 +179,25 @@ Table changelogs {
   release_date datetime
   platform_id varchar [ref: > platforms.id]
 }
+
+Table roadmaps {
+  id varchar [pk]
+  title varchar(255)
+  description text
+  start_date datetime
+  end_date datetime
+  platform_id varchar [ref: > platforms.id]
+  status ROADMAP_STATUS
+  created_at timestamp
+  updated_at timestamp
+  user_id varchar [ref: > users.id]
+  request_id varchar [ref: > requests.id]
+}
+
+Enum ROADMAP_STATUS {
+  planned
+  in_progress
+  completed
+  cancelled
+  on_hold
+}

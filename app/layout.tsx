@@ -5,8 +5,6 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import RightSideBar from "@/components/RightSideBar";
 import MobileNavigation from "@/components/MobileNavigation";
-import { verifySession } from "@/lib/dal";
-import CreatePost from "@/components/CreatePost";
 import AuthModal from "@/components/AuthModal";
 
 const geistSans = Geist({
@@ -29,8 +27,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isAuth } = await verifySession();
-
   return (
     <html lang="en">
       <body
@@ -47,7 +43,6 @@ export default async function RootLayout({
               <MobileNavigation />
 
               <div className="col-span-1 md:col-span-7 pb-20">
-                {isAuth && <CreatePost />}
                 {children}
                 <AuthModal />
               </div>

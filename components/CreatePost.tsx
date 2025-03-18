@@ -5,6 +5,7 @@ import MyAvatar from "@/components/ui/MyAvatar";
 import CreateRequestForm from "@/components/forms/CreatePostForm";
 import { getPlatforms } from "@/actions/platforms";
 import { Platform } from "@/types";
+import { PlusCircle } from "lucide-react";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,11 +14,8 @@ export default function CreatePost() {
 
   useEffect(() => {
     if (formSuccess) {
-      // Tutup modal
       setIsModalOpen(false);
-      // Reset state
       setFormSuccess(false);
-
       window.location.reload();
     }
   }, [formSuccess]);
@@ -37,7 +35,7 @@ export default function CreatePost() {
 
   return (
     <>
-      <div className="card bg-base-100 shadow-xl mb-4">
+      <div className="hidden md:block card bg-base-100 shadow-xl mb-4">
         <div className="card-body">
           <div className="flex gap-4">
             <MyAvatar />
@@ -59,6 +57,13 @@ export default function CreatePost() {
           </div>
         </div>
       </div>
+
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="md:hidden fixed bottom-25 right-6 btn btn-circle btn-primary text-2xl shadow-lg z-50"
+      >
+        <PlusCircle size={24} />
+      </button>
 
       {isModalOpen && (
         <dialog open className="modal backdrop-blur-xs">

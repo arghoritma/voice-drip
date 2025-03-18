@@ -1,41 +1,55 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MoreHorizontal, Pencil, Shield, Trash } from "lucide-react";
+import { GetUsers, DeleteUser, MakeAdmin } from "@/actions/users";
+import dayjs from "dayjs";
+
+interface UserProps {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  created_at: string;
+}
 
 export default function Page() {
-  const dummyUsers = [
-    {
-      id: "1",
-      name: "John Doe",
-      email: "john@example.com",
-      avatar: "https://i.pravatar.cc/150?img=1",
-      created_at: "2023-01-01",
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      avatar: "https://i.pravatar.cc/150?img=2",
-      created_at: "2023-01-02",
-    },
-    {
-      id: "3",
-      name: "Bob Wilson",
-      email: "bob@example.com",
-      avatar: "https://i.pravatar.cc/150?img=3",
-      created_at: "2023-01-03",
-    },
-  ];
-
+  const [users, setUsers] = useState<UserProps[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredUsers = dummyUsers.filter(
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await GetUsers();
+      if (response.success) {
+        setUsers(response.users);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const deleteUser = async (id: string) => {
+    const response = await DeleteUser(id);
+    if (response.success) {
+      setUsers(users.filter((user) => user.id !== id));
+    }
+  };
+
+  const makeAdmin = async (id: string) => {
+    const response = await MakeAdmin(id);
+    if (response.success) {
+      const updatedUsers = users.map((user) =>
+        user.id === id ? response.users[0] : user
+      );
+      setUsers(updatedUsers);
+    }
+  };
 
   return (
     <div className="p-8">
@@ -52,7 +66,7 @@ export default function Page() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table table-sm">
           <thead>
             <tr>
               <th>User</th>
@@ -65,19 +79,21 @@ export default function Page() {
             {filteredUsers.map((user) => (
               <tr key={user.id}>
                 <td>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
+                      <div className="mask mask-squircle w-8 h-8">
                         <img src={user.avatar} alt={user.name} />
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">{user.name}</div>
+                      <div className="font-bold text-sm">{user.name}</div>
                     </div>
                   </div>
                 </td>
-                <td>{user.email}</td>
-                <td>{user.created_at}</td>
+                <td className="text-sm">{user.email}</td>
+                <td className="text-sm">
+                  {dayjs(user.created_at).format("DD/MM/YYYY HH:mm")}
+                </td>
                 <td>
                   <div className="dropdown dropdown-end">
                     <div
@@ -85,29 +101,35 @@ export default function Page() {
                       role="button"
                       className="btn btn-ghost btn-xs"
                     >
-                      <MoreHorizontal className="h-4 w-4" />
+                      <MoreHorizontal className="h-3 w-3" />
                     </div>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content z-1 menu p-2 shadow-sm bg-base-100 rounded-box w-52"
+                      className="dropdown-content z-100 menu p-2 shadow-sm bg-base-100 rounded-box w-52 "
                     >
                       <li>
-                        <a className="flex items-center gap-2">
-                          <Pencil className="h-4 w-4" />
+                        <a className="flex items-center gap-2 text-sm">
+                          <Pencil className="h-3 w-3" />
                           Edit
                         </a>
                       </li>
                       <li>
-                        <a className="flex items-center gap-2">
-                          <Shield className="h-4 w-4" />
+                        <button
+                          onClick={() => makeAdmin(user.id)}
+                          className="flex items-center gap-2 text-sm w-full text-left"
+                        >
+                          <Shield className="h-3 w-3" />
                           Make Admin
-                        </a>
+                        </button>
                       </li>
                       <li>
-                        <a className="flex items-center gap-2 text-error">
-                          <Trash className="h-4 w-4" />
+                        <button
+                          onClick={() => deleteUser(user.id)}
+                          className="flex items-center gap-2 text-error text-sm w-full text-left"
+                        >
+                          <Trash className="h-3 w-3" />
                           Delete
-                        </a>
+                        </button>
                       </li>
                     </ul>
                   </div>
