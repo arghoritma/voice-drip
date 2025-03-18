@@ -16,9 +16,9 @@ export default function Page() {
 
   useEffect(() => {
     const fetchPlatforms = async () => {
-      const data = await getPlatforms();
-      if (Array.isArray(data)) {
-        setPlatforms(data);
+      const action = await getPlatforms();
+      if (action.success) {
+        setPlatforms(action.data);
       }
     };
     fetchPlatforms();
@@ -78,7 +78,7 @@ export default function Page() {
                 </p>
                 <div className="card-actions justify-end mt-4">
                   <a
-                    href={`/admin/platforms/${platform.id}/edit`}
+                    href={`/admin/platforms/${platform.id}`}
                     className="btn btn-ghost btn-sm"
                   >
                     Edit

@@ -78,6 +78,7 @@ export interface Platform {
   description: string;
   logo: string;
 }
+
 export interface RequestType {
   type: "feature" | "bug" | "improvement";
 }

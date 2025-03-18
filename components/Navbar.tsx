@@ -1,9 +1,11 @@
 import ProfilNavbar from "./ProfilNavbar";
 import { verifySession } from "@/lib/dal";
 import Image from "next/image";
+import DarkModeButton from "./DarkModeButton";
 
 export default async function Navbar() {
   const { isAuth } = await verifySession();
+
   return (
     <div className="navbar bg-base-100 text-base-content sticky top-0 z-50 glass ">
       <div className="flex-1">
@@ -19,6 +21,7 @@ export default async function Navbar() {
         </a>
       </div>
       <div className="flex-none">
+        <DarkModeButton />
         {isAuth ? (
           <>
             {/* <NotifNavbar /> */}

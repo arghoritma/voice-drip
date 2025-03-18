@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { MoreHorizontal, Pencil, Shield, Trash } from "lucide-react";
+import { Pencil, Shield, Trash } from "lucide-react";
 import { GetUsers, DeleteUser, MakeAdmin } from "@/actions/users";
 import dayjs from "dayjs";
 
@@ -17,6 +17,8 @@ interface UserProps {
 export default function Page() {
   const [users, setUsers] = useState<UserProps[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedUser, setSelectedUser] = useState<UserProps | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,16 +40,14 @@ export default function Page() {
     const response = await DeleteUser(id);
     if (response.success) {
       setUsers(users.filter((user) => user.id !== id));
+      setIsModalOpen(false);
     }
   };
 
   const makeAdmin = async (id: string) => {
     const response = await MakeAdmin(id);
     if (response.success) {
-      const updatedUsers = users.map((user) =>
-        user.id === id ? response.users[0] : user
-      );
-      setUsers(updatedUsers);
+      window.location.reload();
     }
   };
 
@@ -66,7 +66,7 @@ export default function Page() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table table-sm">
+        <table className="table table-sm h-full">
           <thead>
             <tr>
               <th>User</th>
@@ -95,50 +95,74 @@ export default function Page() {
                   {dayjs(user.created_at).format("DD/MM/YYYY HH:mm")}
                 </td>
                 <td>
-                  <div className="dropdown dropdown-end">
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      className="btn btn-ghost btn-xs"
-                    >
-                      <MoreHorizontal className="h-3 w-3" />
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content z-100 menu p-2 shadow-sm bg-base-100 rounded-box w-52 "
-                    >
-                      <li>
-                        <a className="flex items-center gap-2 text-sm">
-                          <Pencil className="h-3 w-3" />
-                          Edit
-                        </a>
-                      </li>
-                      <li>
-                        <button
-                          onClick={() => makeAdmin(user.id)}
-                          className="flex items-center gap-2 text-sm w-full text-left"
-                        >
-                          <Shield className="h-3 w-3" />
-                          Make Admin
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          onClick={() => deleteUser(user.id)}
-                          className="flex items-center gap-2 text-error text-sm w-full text-left"
-                        >
-                          <Trash className="h-3 w-3" />
-                          Delete
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <button
+                    className="btn btn-ghost btn-xs"
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    Actions
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && selectedUser && (
+        <div className="modal modal-open">
+          <div className="modal-box bg-base-200 shadow-xl rounded-2xl">
+            <div className="flex items-center gap-4 mb-6 border-b pb-3">
+              <div className="flex w-full">
+                <div className="flex-none w-1/4 items-center justify-center">
+                  <div className="avatar">
+                    <div className="w-16 h-16 rounded-full">
+                      <img src={selectedUser.avatar} alt={selectedUser.name} />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-grow w-3/4">
+                  <div className="flex flex-col h-full justify-between">
+                    <h3 className="font-bold text-2xl text-primary">
+                      Actions for {selectedUser.name}
+                    </h3>
+                    <div className="flex space-x-3 mt-4">
+                      <button className="btn btn-primary">
+                        <Pencil className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => makeAdmin(selectedUser.id)}
+                        className="btn btn-success"
+                      >
+                        <Shield className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => deleteUser(selectedUser.id)}
+                        className="btn btn-error"
+                      >
+                        <Trash className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-action mt-8">
+              <button
+                className="btn btn-neutral"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setSelectedUser(null);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
