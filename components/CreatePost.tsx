@@ -24,7 +24,7 @@ export default function CreatePost() {
     const fetchPlatforms = async () => {
       try {
         const platforms = await getPlatforms();
-        setPlatforms(platforms as Platform[]);
+        setPlatforms(platforms.data as Platform[]);
       } catch (error) {
         console.error("Error fetching platforms:", error);
       }

@@ -8,6 +8,7 @@ interface UserProps {
   email: string;
   avatar: string;
   created_at: string;
+  role: string;
 }
 
 interface UserResponse {
@@ -18,7 +19,7 @@ interface UserResponse {
 
 export async function GetUsers(): Promise<UserResponse> {
   try {
-    const users = await db.select().from("users").where("role", "user");
+    const users = await db.select().from("users");
     return {
       success: true,
       users: users,
@@ -115,6 +116,36 @@ export async function MakeAdmin(id: string): Promise<UserResponse> {
     };
   } catch (error) {
     console.error("Error making user admin:", error);
+    return {
+      success: false,
+      users: [],
+      error:
+        error instanceof Error ? error : new Error("An unknown error occurred"),
+    };
+  }
+}
+
+export async function MakeUser(id: string): Promise<UserResponse> {
+  try {
+    const user = await db.select().from("users").where("id", id).first();
+    if (!user) {
+      return {
+        success: false,
+        users: [],
+        error: new Error("User not found"),
+      };
+    }
+
+    await db.update({ role: "user" }).from("users").where("id", id);
+    const updatedUser = await db.select().from("users").where("id", id).first();
+
+    return {
+      success: true,
+      users: [updatedUser],
+      error: null,
+    };
+  } catch (error) {
+    console.error("Error making admin to user:", error);
     return {
       success: false,
       users: [],

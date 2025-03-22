@@ -2,8 +2,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Pencil, Shield, Trash } from "lucide-react";
-import { GetUsers, DeleteUser, MakeAdmin } from "@/actions/users";
+import { Pencil, Shield, Trash, User } from "lucide-react";
+import { GetUsers, DeleteUser, MakeAdmin, MakeUser } from "@/actions/users";
 import dayjs from "dayjs";
 
 interface UserProps {
@@ -12,6 +12,7 @@ interface UserProps {
   email: string;
   avatar: string;
   created_at: string;
+  role: string;
 }
 
 export default function Page() {
@@ -19,6 +20,7 @@ export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUser, setSelectedUser] = useState<UserProps | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("users");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,8 +34,9 @@ export default function Page() {
 
   const filteredUsers = users.filter(
     (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      user.role === (activeTab === "users" ? "user" : "admin")
   );
 
   const deleteUser = async (id: string) => {
@@ -51,9 +54,16 @@ export default function Page() {
     }
   };
 
+  const makeUser = async (id: string) => {
+    const response = await MakeUser(id);
+    if (response.success) {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Users</h1>
+      <h1 className="text-2xl font-bold mb-6">Users Management</h1>
 
       <div className="mb-4">
         <input
@@ -63,6 +73,23 @@ export default function Page() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+
+      <div role="tablist" className="tabs tabs-lift mb-4">
+        <a
+          role="tab"
+          className={`tab ${activeTab === "users" ? "tab-active" : ""}`}
+          onClick={() => setActiveTab("users")}
+        >
+          Users
+        </a>
+        <a
+          role="tab"
+          className={`tab ${activeTab === "admins" ? "tab-active" : ""}`}
+          onClick={() => setActiveTab("admins")}
+        >
+          Admins
+        </a>
       </div>
 
       <div className="overflow-x-auto">
@@ -113,51 +140,46 @@ export default function Page() {
 
       {isModalOpen && selectedUser && (
         <div className="modal modal-open">
-          <div className="modal-box bg-base-200 shadow-xl rounded-2xl">
-            <div className="flex items-center gap-4 mb-6 border-b pb-3">
-              <div className="flex w-full">
-                <div className="flex-none w-1/4 items-center justify-center">
-                  <div className="avatar">
-                    <div className="w-16 h-16 rounded-full">
-                      <img src={selectedUser.avatar} alt={selectedUser.name} />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-grow w-3/4">
-                  <div className="flex flex-col h-full justify-between">
-                    <h3 className="font-bold text-2xl text-primary">
-                      Actions for {selectedUser.name}
-                    </h3>
-                    <div className="flex space-x-3 mt-4">
-                      <button className="btn btn-primary">
-                        <Pencil className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => makeAdmin(selectedUser.id)}
-                        className="btn btn-success"
-                      >
-                        <Shield className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => deleteUser(selectedUser.id)}
-                        className="btn btn-error"
-                      >
-                        <Trash className="h-5 w-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="modal-action mt-8">
+          <div className="modal-box">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg">
+                Actions for {selectedUser.name}
+              </h3>
               <button
-                className="btn btn-neutral"
+                className="btn btn-sm btn-circle"
                 onClick={() => {
                   setIsModalOpen(false);
                   setSelectedUser(null);
                 }}
               >
-                Close
+                ✕
+              </button>
+            </div>
+
+            <div className="flex gap-2">
+              <button className="btn btn-primary btn-sm">
+                <Pencil className="h-4 w-4" />
+              </button>
+              {selectedUser.role === "user" ? (
+                <button
+                  onClick={() => makeAdmin(selectedUser.id)}
+                  className="btn btn-success btn-sm"
+                >
+                  <Shield className="h-4 w-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => makeUser(selectedUser.id)}
+                  className="btn btn-success btn-sm"
+                >
+                  <User className="h-4 w-4" />
+                </button>
+              )}
+              <button
+                onClick={() => deleteUser(selectedUser.id)}
+                className="btn btn-error btn-sm"
+              >
+                <Trash className="h-4 w-4" />
               </button>
             </div>
           </div>

@@ -18,7 +18,7 @@ export default async function Sidebar() {
 
   return (
     <div className="hidden md:block md:col-span-2">
-      <div className="card bg-base-100 shadow-xl sticky top-20">
+      <div className="card bg-base-100 sticky top-20">
         <div className="card-body">
           <div className="space-y-2">
             <Link
@@ -43,18 +43,18 @@ export default async function Sidebar() {
               Improvement
             </Link>
             <Link
-              href="/roadmaps"
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
-            >
-              <Map size={20} />
-              Roadmaps
-            </Link>
-            <Link
               href="/bugs"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
               <Bug size={20} />
               Bug Reports
+            </Link>
+            <Link
+              href="/roadmaps"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
+            >
+              <Map size={20} />
+              Roadmaps
             </Link>
 
             {isAdmin && (

@@ -15,7 +15,7 @@ export default async function RightSideBar() {
 
   return (
     <div className="hidden md:block md:col-span-3">
-      <div className="card bg-base-100 shadow-xl sticky top-20">
+      <div className="card bg-base-100  sticky top-20">
         <div className="card-body">
           <h3 className="font-bold text-lg">Platform Feedback Stats</h3>
           <div className="space-y-4 mt-2">

@@ -56,7 +56,7 @@ export default function Page() {
           platforms.map((platform) => (
             <div
               key={platform.id}
-              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 "
             >
               <div className="card-body">
                 <div className="flex items-center gap-4">
@@ -73,9 +73,7 @@ export default function Page() {
                   )}
                   <h2 className="card-title text-xl">{platform.name}</h2>
                 </div>
-                <p className="text-base-content/70 mt-4">
-                  {platform.description}
-                </p>
+                <p className="text-base-content/70 ">{platform.description}</p>
                 <div className="card-actions justify-end mt-4">
                   <a
                     href={`/admin/platforms/${platform.id}`}

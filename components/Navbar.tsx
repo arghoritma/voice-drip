@@ -2,6 +2,7 @@ import ProfilNavbar from "./ProfilNavbar";
 import { verifySession } from "@/lib/dal";
 import Image from "next/image";
 import DarkModeButton from "./DarkModeButton";
+import { LogIn } from "lucide-react";
 
 export default async function Navbar() {
   const { isAuth } = await verifySession();
@@ -33,7 +34,8 @@ export default async function Navbar() {
               htmlFor="auth_modal"
               className="btn btn-primary btn-md rounded-md"
             >
-              Add Issue
+              <LogIn className="w-5 h-5 mr-2" />
+              Login
             </label>
           </>
         )}

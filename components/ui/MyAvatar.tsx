@@ -26,6 +26,9 @@ export default function Avatar() {
             src={avatar}
             alt="Profile"
             className="object-cover"
+            onError={() => {
+              setAvatar(null);
+            }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-base-200">

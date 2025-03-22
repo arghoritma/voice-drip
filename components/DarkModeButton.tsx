@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function DarkModeButton() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    }
+  }, [theme]);
+
   const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTheme = e.target.checked ? "dark" : "light";
     setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
   };
+
   return (
     <label className="swap swap-rotate mr-4">
       <input
