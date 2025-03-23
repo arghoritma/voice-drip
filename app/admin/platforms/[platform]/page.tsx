@@ -9,6 +9,10 @@ export default async function Page({
   const platformId = (await params).platform;
   const { data: platform } = await getPlatform(platformId);
 
+  if (!platform) {
+    return null;
+  }
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Platform</h1>

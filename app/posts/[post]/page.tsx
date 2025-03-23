@@ -50,7 +50,7 @@ export default async function PostDetail({
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      <div className="card bg-base-100  hover:shadow-2xl transition-shadow duration-300">
         <div className="card-body p-4">
           <div className="flex flex-row justify-between items-start gap-2">
             <div className="flex items-center gap-2">
@@ -78,15 +78,15 @@ export default async function PostDetail({
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-1 mt-3">
+          {/* <div className="flex flex-wrap gap-1 mt-3">
             {post.tags?.map((tag) => (
               <div key={tag} className="badge badge-outline badge-lg">
                 {tag}
               </div>
             ))}
-          </div>
+          </div> */}
 
-          <div className="flex justify-between gap-2 items-center mt-3 pt-3 border-t">
+          <div className="flex justify-between gap-2 items-center  pt-3 border-t">
             <div className="flex items-center gap-1 text-xs uppercase">
               {post.type === "bug" ? (
                 <Bug size={12} className="text-error" />
@@ -121,11 +121,9 @@ export default async function PostDetail({
             </div>
           </div>
 
-          <div className="divider my-4"></div>
-
           {/* Add Comment */}
           {isAuth && (
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 my-6">
               <MyAvatar />
               <CreateComment requestId={postId} />
             </div>

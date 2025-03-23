@@ -35,7 +35,7 @@ export default function CreatePost() {
 
   return (
     <>
-      <div className="hidden md:block card bg-base-100 shadow-xl mb-4">
+      <div className="hidden md:block card bg-base-100  mb-4">
         <div className="card-body">
           <div className="flex gap-4">
             <MyAvatar />
@@ -46,7 +46,7 @@ export default function CreatePost() {
               onClick={() => setIsModalOpen(true)}
             />
           </div>
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="flex justify-end gap-2 ">
             <button
               className="btn btn-primary"
               onClick={() => setIsModalOpen(true)}

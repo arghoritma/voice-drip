@@ -37,9 +37,9 @@ export async function createPlatform(
 }
 
 export async function updatePlatform(
-  prev: { succes: boolean; error?: Error | undefined },
+  prev: { success: boolean; error?: string },
   formData: FormData
-): Promise<{ succes: boolean; error?: Error }> {
+): Promise<{ success: boolean; error?: string }> {
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
@@ -55,15 +55,14 @@ export async function updatePlatform(
     });
 
     revalidatePath("/dashboard/platforms/" + id);
-    return { succes: true };
+    return { success: true };
   } catch (error) {
     return {
-      succes: false,
-      error: error as Error,
+      success: false,
+      error: error as string,
     };
   }
 }
-
 export async function deletePlatform(platformId: string): Promise<{
   success: boolean;
   errors: { _form?: string[] };
@@ -103,7 +102,7 @@ export async function getPlatforms(): Promise<{
 
 export async function getPlatform(platformId: string): Promise<{
   success: boolean;
-  data: Platform | null;
+  data?: Platform | null;
   error: Error | null;
 }> {
   try {
@@ -115,7 +114,6 @@ export async function getPlatform(platformId: string): Promise<{
   } catch (error) {
     return {
       success: false,
-      data: null,
       error: error instanceof Error ? error : new Error(String(error)),
     };
   }
