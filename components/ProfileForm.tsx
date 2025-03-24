@@ -26,7 +26,6 @@ export default function ProfileForm() {
         if (profile) {
           setProfile(profile);
         }
-        console.log("Profile:", profile);
       } catch (error) {
         console.error("Failed to fetch profile:", error);
       }

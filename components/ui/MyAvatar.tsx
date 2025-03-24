@@ -12,7 +12,6 @@ export default function Avatar() {
       const { data: action } = await getProfile();
       if (action.avatar) {
         setAvatar(action.avatar);
-        console.log(action.avatar);
       }
     };
     getAvatar();

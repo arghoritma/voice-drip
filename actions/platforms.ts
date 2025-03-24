@@ -118,8 +118,3 @@ export async function getPlatform(platformId: string): Promise<{
     };
   }
 }
-
-export async function test(formData: FormData) {
-  const id = formData.get("platform");
-  console.log(id);
-}

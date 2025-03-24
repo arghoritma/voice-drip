@@ -7,8 +7,6 @@ export default async function Home() {
   const { data: requests, success } = await getRequests();
   const { isAuth } = await verifySession();
 
-  console.log(requests);
-
   return (
     <>
       {isAuth && <CreatePost />}

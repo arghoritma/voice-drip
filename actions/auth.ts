@@ -20,7 +20,7 @@ export async function signup(
     // Check if email already exists
     const existingUser = await db("users").where({ email }).first();
     if (existingUser) {
-      console.log("Email already exists");
+    
       return {
         errors: {
           email: ["Email already exists"],

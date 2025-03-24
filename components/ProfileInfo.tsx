@@ -15,7 +15,6 @@ export default function ProfileInfo() {
       try {
         const profile = await getProfile();
         setUser(profile.data);
-        console.log(profile);
       } catch (error) {
         console.error("Failed to get user:", error);
       }
