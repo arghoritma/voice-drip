@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Avatar from "@/components/ui/Avatar";
 import { MessageCircle, Bug, Rocket, Sparkles } from "lucide-react";
 import { PostCardProps } from "@/types";
@@ -64,28 +65,42 @@ export default function PostCard({ item }: PostCardProps) {
           ))}
         </div> */}
         <div className="flex justify-between gap-2 items-center pt-3 border-t">
-          <div className="flex items-center gap-1 text-xs uppercase">
-            {item.type === "bug" ? (
-              <Bug size={12} className="text-error" />
-            ) : item.type === "feature" ? (
-              <Sparkles size={12} className="text-primary" />
-            ) : item.type === "improvement" ? (
-              <Rocket size={12} className="text-success" />
-            ) : null}
-            <span
-              className={`
-              ${item.type === "bug" ? "text-error" : ""}
-              ${item.type === "feature" ? "text-primary" : ""}
-              ${item.type === "improvement" ? "text-success" : ""}
-              ${
-                !["bug", "feature", "improvement"].includes(item.type)
-                  ? "text-neutral"
-                  : ""
-              }
-            `}
-            >
-              {item.type}
-            </span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 text-xs uppercase">
+              {item.type === "bug" ? (
+                <Bug size={12} className="text-error" />
+              ) : item.type === "feature" ? (
+                <Sparkles size={12} className="text-primary" />
+              ) : item.type === "improvement" ? (
+                <Rocket size={12} className="text-success" />
+              ) : null}
+              <span
+                className={`
+                ${item.type === "bug" ? "text-error" : ""}
+                ${item.type === "feature" ? "text-primary" : ""}
+                ${item.type === "improvement" ? "text-success" : ""}
+                ${
+                  !["bug", "feature", "improvement"].includes(item.type)
+                    ? "text-neutral"
+                    : ""
+                }
+              `}
+              >
+                {item.type}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <img
+                src={item.platform_logo}
+                alt={item.platform_name}
+                width={16}
+                height={16}
+                className="rounded-sm"
+              />
+              <span className="text-xs text-base-content/70">
+                {item.platform_name}
+              </span>
+            </div>
           </div>
           <div className="flex gap-1">
             <Like item={item.likes} islike={item.isVoted} requestId={item.id} />

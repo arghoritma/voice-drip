@@ -3,7 +3,12 @@
 import db from "@/services/db";
 import { verifySession } from "@/lib/dal";
 import { generateUUID } from "@/lib/helper";
-import { Request, RequestDetailsProps, RequestResponse, RequestWithDetails } from "@/types";
+import {
+  Request,
+  RequestDetailsProps,
+  RequestResponse,
+  RequestWithDetails,
+} from "@/types";
 
 export async function createRequest(
   prev: RequestResponse,
@@ -87,6 +92,7 @@ export async function getRequests(): Promise<{
     // Base query without conditional raw statement
     let requestsQuery = db("requests")
       .join("users", "requests.user_id", "users.id")
+      .join("platforms", "requests.platform_id", "platforms.id")
       .select(
         "requests.id",
         "requests.title",
@@ -96,6 +102,8 @@ export async function getRequests(): Promise<{
         "requests.created_at",
         "users.name as user_name",
         "users.avatar as user_avatar",
+        "platforms.logo as platform_logo",
+        "platforms.name as platform_name",
         db.raw(
           "(SELECT COUNT(*) FROM request_tags WHERE request_tags.request_id = requests.id) as tags_count"
         ),
@@ -106,7 +114,6 @@ export async function getRequests(): Promise<{
           "(SELECT COUNT(*) FROM comments WHERE comments.request_id = requests.id) as comments_count"
         )
       );
-
     // Add is_voted calculation based on userId presence
     if (session.userId) {
       requestsQuery = requestsQuery.select(
@@ -136,6 +143,8 @@ export async function getRequests(): Promise<{
       likes: request.likes,
       comments: request.comments_count,
       isVoted: request.is_voted,
+      platform_name: request.platform_name,
+      platform_logo: request.platform_logo,
     }));
 
     return {

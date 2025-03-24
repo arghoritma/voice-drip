@@ -69,6 +69,8 @@ export interface PostCardProps {
     likes: number;
     comments: number;
     isVoted: boolean;
+    platform_name: string;
+    platform_logo: string;
   };
 }
 
@@ -161,6 +163,8 @@ export interface RequestDetailsProps {
   likes: number;
   comments: number;
   isVoted: boolean;
+  platform_name: string;
+  platform_logo: string;
 }
 
 export interface ProfileProps {
