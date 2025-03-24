@@ -42,7 +42,6 @@ next-env.d.ts
 
 # database
 /db
-/storage
 
 # firebase admin key
 /key
