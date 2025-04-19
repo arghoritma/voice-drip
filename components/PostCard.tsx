@@ -30,7 +30,7 @@ export default function PostCard({ item }: PostCardProps) {
   return (
     <div
       key={item.id}
-      className="card bg-base-100  hover:shadow-2xl transition-shadow duration-300"
+      className="card bg-base-100  hover:shadow-2xl transition-shadow duration-300 mt-2"
     >
       <div className="card-body p-4">
         <div className="flex flex-row justify-between items-start gap-2">
@@ -57,13 +57,6 @@ export default function PostCard({ item }: PostCardProps) {
             {item.description}
           </p>
         </div>
-        {/* <div className="flex flex-wrap gap-1 mt-3">
-          {item.tags.map((tag: string, index: number) => (
-            <div key={index} className="badge badge-outline badge-lg">
-              {tag}
-            </div>
-          ))}
-        </div> */}
         <div className="flex justify-between gap-2 items-center pt-3 border-t">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs uppercase">
@@ -76,15 +69,15 @@ export default function PostCard({ item }: PostCardProps) {
               ) : null}
               <span
                 className={`
-                ${item.type === "bug" ? "text-error" : ""}
-                ${item.type === "feature" ? "text-primary" : ""}
-                ${item.type === "improvement" ? "text-success" : ""}
-                ${
-                  !["bug", "feature", "improvement"].includes(item.type)
-                    ? "text-neutral"
-                    : ""
-                }
-              `}
+                  ${item.type === "bug" ? "text-error" : ""}
+                  ${item.type === "feature" ? "text-primary" : ""}
+                  ${item.type === "improvement" ? "text-success" : ""}
+                  ${
+                    !["bug", "feature", "improvement"].includes(item.type)
+                      ? "text-neutral"
+                      : ""
+                  }
+                `}
               >
                 {item.type}
               </span>

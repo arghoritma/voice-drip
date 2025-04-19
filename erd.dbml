@@ -21,6 +21,20 @@ Table files {
   uploaded_at datetime [default: `CURRENT_TIMESTAMP`]
 }
 
+Table post_images {
+  id varchar [pk]
+  post_id varchar [not null, ref: > posts.id]
+  image_url varchar [not null]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+}
+
+Table comment_images {
+  id varchar [pk]
+  comment_id varchar [not null, ref: > comments.id]
+  image_url varchar [not null]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+}
+
 Table sessions {
   id varchar [pk]
   user_id varchar [not null, ref: > users.id]

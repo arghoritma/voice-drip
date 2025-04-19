@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
   webpack: (config) => {
     config.ignoreWarnings = [{ module: /node_modules\/knex/ }];
     config.resolve.fallback = {

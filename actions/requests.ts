@@ -9,6 +9,7 @@ import {
   RequestResponse,
   RequestWithDetails,
 } from "@/types";
+import { uploadRequestImages } from "@/lib/uploadFile";
 
 export async function createRequest(
   prev: RequestResponse,
@@ -28,7 +29,32 @@ export async function createRequest(
   const description = formData.get("description") as string;
   const type = formData.get("type") as "feature" | "bug" | "improvement";
   const platformId = formData.get("platform") as string;
+  const files = formData.getAll("files") as File[];
+  const requestId = generateUUID();
 
+  if (files && files.length > 0) {
+    try {
+      const uploadPromises = files.map(async (file) => {
+        try {
+          const uploadedUrl = await uploadRequestImages(file, requestId);
+          return uploadedUrl;
+        } catch (error) {
+          throw error;
+        }
+      });
+
+      const uploadedUrls = await Promise.all(uploadPromises);
+      console.log("Uploaded URLs:", uploadedUrls);
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      return {
+        success: false,
+        errors: {
+          _form: ["Failed to upload images. Please try again."],
+        },
+      };
+    }
+  }
   if (!title || !description || !type || !platformId) {
     return {
       success: false,
@@ -37,10 +63,7 @@ export async function createRequest(
       },
     };
   }
-
   try {
-    const requestId = generateUUID();
-
     await db.transaction(async (trx) => {
       // Insert the request
       await trx("requests").insert({

@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState, useRef } from "react";
 import { useActionState } from "react";
 import { createRequest } from "@/actions/requests";
 import { Platform, RequestResponse } from "@/types";
@@ -17,6 +19,42 @@ export default function CreateRequestForm({
     createRequest,
     initialState
   );
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newPreviewImages: string[] = [];
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          newPreviewImages.push(e.target.result as string);
+          setPreviewImages([...newPreviewImages]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (index: number) => {
+    const newPreviewImages = [...previewImages];
+    newPreviewImages.splice(index, 1);
+    setPreviewImages(newPreviewImages);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const removeAllImages = () => {
+    setPreviewImages([]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   useEffect(() => {
     if (state.success && onSuccess) {
@@ -29,7 +67,6 @@ export default function CreateRequestForm({
       {state.errors?._form && (
         <div className="text-error">{state.errors._form.join(", ")}</div>
       )}
-
       <div className="form-control">
         <label htmlFor="platform" className="label">
           <span className="label-text">Platform</span>
@@ -89,6 +126,48 @@ export default function CreateRequestForm({
             className="textarea textarea-bordered w-full"
             required
           />
+        </div>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Images</span>
+          </label>
+          <div className="upload__image-wrapper">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              multiple
+              accept="image/*"
+              name="files"
+              className="file-input file-input-bordered w-full mb-2"
+            />
+            {previewImages.length > 0 && (
+              <button
+                type="button"
+                onClick={removeAllImages}
+                className="btn btn-outline btn-sm mb-4"
+              >
+                Remove all images
+              </button>
+            )}
+            <div className="grid grid-cols-2 gap-4">
+              {previewImages.map((image, index) => (
+                <div key={index} className="image-item border p-2 rounded">
+                  <img src={image} alt="" className="w-full h-auto" />
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="btn btn-xs btn-outline btn-error"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <button
