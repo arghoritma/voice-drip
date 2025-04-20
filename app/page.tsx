@@ -12,8 +12,10 @@ export default async function Home() {
       {isAuth && <CreatePost />}
       <div className="space-y-4">
         {success &&
-          requests?.map((item) => <PostCard key={item.id} item={item} />)}
-      </div>
+          requests?.map((request) => (
+            <PostCard key={request.id} item={request} />
+          ))}{" "}
+      </div>{" "}
     </>
   );
 }

@@ -81,6 +81,7 @@ export default function Page() {
           className={`tab ${activeTab === "users" ? "tab-active" : ""}`}
           onClick={() => setActiveTab("users")}
         >
+          <User className="h-4 w-4 mr-2" />
           Users
         </a>
         <a
@@ -88,10 +89,10 @@ export default function Page() {
           className={`tab ${activeTab === "admins" ? "tab-active" : ""}`}
           onClick={() => setActiveTab("admins")}
         >
+          <Shield className="h-4 w-4 mr-2" />
           Admins
         </a>
       </div>
-
       <div className="overflow-x-auto">
         <table className="table table-sm h-full">
           <thead>

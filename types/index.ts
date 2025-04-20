@@ -48,9 +48,12 @@ export interface RequestWithDetails {
   created_at: Date;
   updated_at: Date;
   user_id: string;
-  comments: CommentWithUser[]; // Komentar dengan informasi user
+  platform_id: string;
+  platform_name: string;
+  platform_logo: string;
+  images: string[];
+  comments: CommentWithUser[];
   vote_count: number;
-  tags: string[];
 }
 
 export interface PostCardProps {
@@ -71,6 +74,7 @@ export interface PostCardProps {
     isVoted: boolean;
     platform_name: string;
     platform_logo: string;
+    images: string[];
   };
 }
 
@@ -165,6 +169,7 @@ export interface RequestDetailsProps {
   isVoted: boolean;
   platform_name: string;
   platform_logo: string;
+  images: string[];
 }
 
 export interface ProfileProps {

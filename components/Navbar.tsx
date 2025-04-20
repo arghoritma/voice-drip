@@ -12,7 +12,7 @@ export default async function Navbar() {
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">
           <Image
-            src="/logo.png"
+            src="/vd.png"
             alt="Voice Drip Logo"
             width={32}
             height={32}

@@ -1,6 +1,7 @@
 import { writeFile } from "fs/promises";
 import path from "path";
 import db from "@/services/db";
+import { generateUUID } from "./helper";
 
 const storageUrl = process.env.STORAGE_URL!;
 const storageRoot = process.env.STORAGE_ROOT!;
@@ -38,6 +39,7 @@ export async function uploadFile(file: File, folder: string): Promise<string> {
 }
 
 export async function uploadRequestImages(file: File, requestId: string) {
+  console.log("Uploading file:", file.name);
   try {
     if (!file) {
       throw new Error("No file uploaded");
@@ -60,11 +62,12 @@ export async function uploadRequestImages(file: File, requestId: string) {
     console.log(`Upload progress: ${percentage}%`);
 
     const fileUrl = `${storageUrl}/requests/${formattedFileName}`;
+    const id = generateUUID();
 
     // Save to database
-    await db("post_images").insert({
-      id: `${timestamp}`,
-      post_id: requestId,
+    await db("request_images").insert({
+      id: id,
+      request_id: requestId,
       image_url: fileUrl,
     });
   } catch (error: unknown) {

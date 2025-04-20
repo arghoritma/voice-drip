@@ -1,15 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
 import Avatar from "@/components/ui/Avatar";
-import { MessageCircle, Bug, Rocket, Sparkles } from "lucide-react";
+import { MessageCircle, Bug, Rocket, Sparkles, X } from "lucide-react";
 import { PostCardProps } from "@/types";
 import Like from "./forms/Like";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useState } from "react";
 
 dayjs.extend(relativeTime);
 
 export default function PostCard({ item }: PostCardProps) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "submitted":
@@ -56,6 +61,19 @@ export default function PostCard({ item }: PostCardProps) {
           <p className="text-sm text-base-content/80 leading-relaxed">
             {item.description}
           </p>
+          {item.images && item.images.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {item.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Request image ${index + 1}`}
+                  className="w-20 h-full object-cover rounded-lg cursor-pointer"
+                  onClick={() => setSelectedImage(image)}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex justify-between gap-2 items-center pt-3 border-t">
           <div className="flex items-center gap-2">
@@ -112,6 +130,30 @@ export default function PostCard({ item }: PostCardProps) {
           </div>
         </div>
       </div>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] p-4">
+            <button
+              className="absolute top-0 right-0 p-2 text-white bg-black bg-opacity-50 rounded-full m-2 hover:bg-opacity-70"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage(null);
+              }}
+            >
+              <X size={24} />
+            </button>
+            <img
+              src={selectedImage}
+              alt="Selected image"
+              className="max-h-[85vh] w-auto object-contain"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

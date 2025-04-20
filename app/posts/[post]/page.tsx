@@ -7,6 +7,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Bug, Rocket, Sparkles } from "lucide-react";
 import { verifySession } from "@/lib/dal";
 import Comment from "@/components/Comment";
+import Image from "next/image";
+import { GetIsAdmin } from "@/actions/profile";
+import DeletePost from "@/components/DeletePost";
 
 dayjs.extend(relativeTime);
 
@@ -18,6 +21,7 @@ export default async function PostDetail({
   const postId = (await params).post;
   const response = await getRequestWithDetails(postId);
   const { isAuth } = await verifySession();
+  const { isAdmin } = await GetIsAdmin();
 
   if (!response.success || !response.data) {
     return (
@@ -62,12 +66,13 @@ export default async function PostDetail({
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2 items-center">
               <span
                 className={`text-xs ${getStatusColor(post.status)} uppercase`}
               >
                 {post.status.replace("_", " ")}
               </span>
+              {isAdmin && <DeletePost postId={postId} />}
             </div>
           </div>
 
@@ -76,15 +81,24 @@ export default async function PostDetail({
             <p className="text-sm text-base-content/80 leading-relaxed">
               {post.description}
             </p>
-          </div>
-
-          {/* <div className="flex flex-wrap gap-1 mt-3">
-            {post.tags?.map((tag) => (
-              <div key={tag} className="badge badge-outline badge-lg">
-                {tag}
+            {post.images && post.images.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {post.images.map((image: string, index: number) => (
+                  <div key={index} className="relative">
+                    <Image
+                      src={image}
+                      alt={`Request image ${index + 1}`}
+                      width={0}
+                      height={0}
+                      sizes="50vw"
+                      style={{ width: "auto", height: "auto" }}
+                      className="rounded-lg"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div> */}
+            )}
+          </div>
 
           <div className="flex justify-between gap-2 items-center  pt-3 border-t">
             <div className="flex items-center gap-1 text-xs uppercase">
@@ -97,15 +111,15 @@ export default async function PostDetail({
               ) : null}
               <span
                 className={`
-                ${post.type === "bug" ? "text-error" : ""}
-                ${post.type === "feature" ? "text-primary" : ""}
-                ${post.type === "improvement" ? "text-success" : ""}
-                ${
-                  !["bug", "feature", "improvement"].includes(post.type)
-                    ? "text-neutral"
-                    : ""
-                }
-              `}
+                  ${post.type === "bug" ? "text-error" : ""}
+                  ${post.type === "feature" ? "text-primary" : ""}
+                  ${post.type === "improvement" ? "text-success" : ""}
+                  ${
+                    !["bug", "feature", "improvement"].includes(post.type)
+                      ? "text-neutral"
+                      : ""
+                  }
+                `}
               >
                 {post.type}
               </span>

@@ -8,7 +8,6 @@ import {
   Home,
   Lightbulb,
   Bug,
-  Map,
   TrendingUp,
 } from "lucide-react";
 import { GetIsAdmin } from "@/actions/profile";
@@ -49,13 +48,13 @@ export default async function Sidebar() {
               <Bug size={20} />
               Bug Reports
             </Link>
-            <Link
+            {/* <Link
               href="/roadmaps"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-200"
             >
               <Map size={20} />
               Roadmaps
-            </Link>
+            </Link> */}
 
             {isAdmin && (
               <>

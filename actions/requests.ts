@@ -116,6 +116,7 @@ export async function getRequests(): Promise<{
     let requestsQuery = db("requests")
       .join("users", "requests.user_id", "users.id")
       .join("platforms", "requests.platform_id", "platforms.id")
+      .leftJoin("request_images", "requests.id", "request_images.request_id")
       .select(
         "requests.id",
         "requests.title",
@@ -127,6 +128,7 @@ export async function getRequests(): Promise<{
         "users.avatar as user_avatar",
         "platforms.logo as platform_logo",
         "platforms.name as platform_name",
+        db.raw("GROUP_CONCAT(DISTINCT request_images.image_url) as images"),
         db.raw(
           "(SELECT COUNT(*) FROM request_tags WHERE request_tags.request_id = requests.id) as tags_count"
         ),
@@ -136,7 +138,20 @@ export async function getRequests(): Promise<{
         db.raw(
           "(SELECT COUNT(*) FROM comments WHERE comments.request_id = requests.id) as comments_count"
         )
+      )
+      .groupBy(
+        "requests.id",
+        "requests.title",
+        "requests.description",
+        "requests.type",
+        "requests.status",
+        "requests.created_at",
+        "users.name",
+        "users.avatar",
+        "platforms.logo",
+        "platforms.name"
       );
+
     // Add is_voted calculation based on userId presence
     if (session.userId) {
       requestsQuery = requestsQuery.select(
@@ -168,8 +183,8 @@ export async function getRequests(): Promise<{
       isVoted: request.is_voted,
       platform_name: request.platform_name,
       platform_logo: request.platform_logo,
+      images: request.images ? request.images.split(",") : [],
     }));
-
     return {
       success: true,
       data: formattedRequests,
@@ -184,7 +199,6 @@ export async function getRequests(): Promise<{
     };
   }
 }
-
 export async function getRequestById(requestId: string): Promise<{
   success: boolean;
   data?: Request;
@@ -229,12 +243,32 @@ export async function getRequestWithDetails(requestId: string): Promise<{
     // Mengambil data request dan user terkait berdasarkan ID
     const request = await db("requests")
       .join("users", "requests.user_id", "users.id")
+      .join("platforms", "requests.platform_id", "platforms.id")
+      .leftJoin("request_images", "requests.id", "request_images.request_id")
       .select(
         "requests.*",
         "users.name as user_name",
-        "users.avatar as user_avatar"
+        "users.avatar as user_avatar",
+        "platforms.logo as platform_logo",
+        "platforms.name as platform_name",
+        db.raw("GROUP_CONCAT(DISTINCT request_images.image_url) as images")
       )
       .where("requests.id", requestId)
+      .groupBy(
+        "requests.id",
+        "requests.title",
+        "requests.description",
+        "requests.type",
+        "requests.status",
+        "requests.created_at",
+        "requests.updated_at",
+        "requests.user_id",
+        "requests.platform_id",
+        "users.name",
+        "users.avatar",
+        "platforms.logo",
+        "platforms.name"
+      )
       .first();
 
     // Jika request tidak ditemukan
@@ -256,8 +290,8 @@ export async function getRequestWithDetails(requestId: string): Promise<{
         "comments.content",
         "comments.created_at",
         "comments.updated_at",
-        "users.name as user_name", // Ambil nama user
-        "users.avatar as user_avatar" // Ambil avatar user
+        "users.name as user_name",
+        "users.avatar as user_avatar"
       )
       .where("comments.request_id", requestId)
       .orderBy("comments.created_at", "asc");
@@ -276,6 +310,9 @@ export async function getRequestWithDetails(requestId: string): Promise<{
         name: request.user_name,
         avatar: request.user_avatar,
       },
+      platform_name: request.platform_name,
+      platform_logo: request.platform_logo,
+      images: request.images ? request.images.split(",") : [],
       comments,
       vote_count: voteCount,
     };
@@ -291,6 +328,42 @@ export async function getRequestWithDetails(requestId: string): Promise<{
       success: false,
       errors: {
         _form: ["Failed to fetch request details. Please try again."],
+      },
+    };
+  }
+}
+
+export async function deleteRequest(requestId: string): Promise<{
+  success: boolean;
+  errors?: { _form?: string[] };
+}> {
+  try {
+    // Menghapus request berdasarkan ID
+    // Delete related records first
+    const requestImages = await db("request_images").where(
+      "request_id",
+      requestId
+    );
+    if (requestImages.length > 0) {
+      await db("request_images").where("request_id", requestId).del();
+    }
+
+    const comments = await db("comments").where("request_id", requestId);
+    if (comments.length > 0) {
+      await db("comments").where("request_id", requestId).del();
+    }
+
+    await db("requests").where("id", requestId).del();
+    // Mengembalikan respon sukses
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error deleting request:", error);
+    return {
+      success: false,
+      errors: {
+        _form: ["Failed to delete request. Please try again."],
       },
     };
   }
