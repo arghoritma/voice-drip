@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Avatar from "@/components/ui/Avatar";
 import { getRequestWithDetails } from "@/actions/requests";
 import MyAvatar from "@/components/ui/MyAvatar";
@@ -7,7 +8,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Bug, Rocket, Sparkles } from "lucide-react";
 import { verifySession } from "@/lib/dal";
 import Comment from "@/components/Comment";
-import Image from "next/image";
 import { GetIsAdmin } from "@/actions/profile";
 import DeletePost from "@/components/DeletePost";
 
@@ -85,13 +85,9 @@ export default async function PostDetail({
               <div className="flex flex-wrap gap-2 mt-4">
                 {post.images.map((image: string, index: number) => (
                   <div key={index} className="relative">
-                    <Image
+                    <img
                       src={image}
                       alt={`Request image ${index + 1}`}
-                      width={0}
-                      height={0}
-                      sizes="50vw"
-                      style={{ width: "auto", height: "auto" }}
                       className="rounded-lg"
                     />
                   </div>
