@@ -1,4 +1,6 @@
-import { writeFile } from "fs/promises";
+"use server";
+
+import { promises as fs } from "fs";
 import path from "path";
 import db from "@/services/db";
 import { generateUUID } from "./helper";
@@ -23,7 +25,7 @@ export async function uploadFile(file: File, folder: string): Promise<string> {
     const totalSize = buffer.length;
     let uploadedSize = 0;
 
-    await writeFile(filePath, buffer);
+    await fs.writeFile(filePath, buffer);
     uploadedSize = totalSize;
     const percentage = Math.round((uploadedSize / totalSize) * 100);
     console.log(`Upload progress: ${percentage}%`);
@@ -56,7 +58,7 @@ export async function uploadRequestImages(file: File, requestId: string) {
     const totalSize = buffer.length;
     let uploadedSize = 0;
 
-    await writeFile(filePath, buffer);
+    await fs.writeFile(filePath, buffer);
     uploadedSize = totalSize;
     const percentage = Math.round((uploadedSize / totalSize) * 100);
     console.log(`Upload progress: ${percentage}%`);
