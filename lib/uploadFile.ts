@@ -63,7 +63,7 @@ export async function uploadRequestImages(file: File, requestId: string) {
     const percentage = Math.round((uploadedSize / totalSize) * 100);
     console.log(`Upload progress: ${percentage}%`);
 
-    const fileUrl = `${storageUrl}/requests/${formattedFileName}`;
+    const fileUrl = `https://storage-voice.drip.id/requests/${formattedFileName}`;
     const id = generateUUID();
 
     // Save to database
