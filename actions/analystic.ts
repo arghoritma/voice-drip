@@ -71,7 +71,7 @@ export async function getTrendingRequests(): Promise<
         { column: "comment_count", order: "desc" },
         { column: "requests.created_at", order: "desc" },
       ])
-      .limit(10);
+      .limit(5);
 
     return {
       succes: true,
