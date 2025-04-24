@@ -1,4 +1,4 @@
-"use server";
+"server-only";
 
 import { promises as fs } from "fs";
 import path from "path";
@@ -41,38 +41,36 @@ export async function uploadFile(file: File, folder: string): Promise<string> {
 }
 
 export async function uploadRequestImages(file: File, requestId: string) {
-  console.log("Uploading file:", file.name);
-  try {
-    if (!file) {
-      throw new Error("No file uploaded");
+  if (file) {
+    console.log("Uploading file:", file.name);
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const timestamp = Date.now();
+      const fileExtension = path.extname(file.name);
+      const formattedFileName = `file_${requestId}_${timestamp}${fileExtension}`;
+
+      const uploadDir = path.join(process.cwd(), `${storageRoot}/requests`);
+      const filePath = path.join(uploadDir, formattedFileName);
+
+      const totalSize = buffer.length;
+      let uploadedSize = 0;
+
+      await fs.writeFile(filePath, buffer);
+      uploadedSize = totalSize;
+      const percentage = Math.round((uploadedSize / totalSize) * 100);
+      console.log(`Upload progress: ${percentage}%`);
+
+      const fileUrl = `https://storage-voice.drip.id/requests/${formattedFileName}`;
+      const id = generateUUID();
+
+      // Save to database
+      await db("request_images").insert({
+        id: id,
+        request_id: requestId,
+        image_url: fileUrl,
+      });
+    } catch (error: unknown) {
+      console.error("Error uploading file:", error);
     }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const timestamp = Date.now();
-    const fileExtension = path.extname(file.name);
-    const formattedFileName = `file_${requestId}_${timestamp}${fileExtension}`;
-
-    const uploadDir = path.join(process.cwd(), `${storageRoot}/requests`);
-    const filePath = path.join(uploadDir, formattedFileName);
-
-    const totalSize = buffer.length;
-    let uploadedSize = 0;
-
-    await fs.writeFile(filePath, buffer);
-    uploadedSize = totalSize;
-    const percentage = Math.round((uploadedSize / totalSize) * 100);
-    console.log(`Upload progress: ${percentage}%`);
-
-    const fileUrl = `https://storage-voice.drip.id/requests/${formattedFileName}`;
-    const id = generateUUID();
-
-    // Save to database
-    await db("request_images").insert({
-      id: id,
-      request_id: requestId,
-      image_url: fileUrl,
-    });
-  } catch (error: unknown) {
-    console.error("Error uploading file:", error);
   }
 }

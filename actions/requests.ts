@@ -54,7 +54,8 @@ export async function createRequest(
         },
       };
     }
-  }
+  }  
+  
   if (!title || !description || !type || !platformId) {
     return {
       success: false,
