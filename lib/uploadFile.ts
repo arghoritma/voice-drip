@@ -5,7 +5,7 @@ import path from "path";
 import db from "@/services/db";
 import { generateUUID } from "./helper";
 
-const storageUrl = process.env.STORAGE_URL || "https://storage-voice.drip.id/";
+const storageUrl = process.env.STORAGE_URL!;
 const storageRoot = process.env.STORAGE_ROOT!;
 
 export async function uploadFile(file: File, folder: string): Promise<string> {

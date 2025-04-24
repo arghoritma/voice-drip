@@ -31,8 +31,9 @@ export async function createRequest(
   const platformId = formData.get("platform") as string;
   const files = formData.getAll("files") as File[];
   const requestId = generateUUID();
+  const hasImages = formData.get("hasImages") === "on";
 
-  if (files && files.length > 0) {
+  if (hasImages && files.length > 0) {
     try {
       const uploadPromises = files.map(async (file) => {
         try {
@@ -54,8 +55,8 @@ export async function createRequest(
         },
       };
     }
-  }  
-  
+  }
+
   if (!title || !description || !type || !platformId) {
     return {
       success: false,

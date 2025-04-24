@@ -19,6 +19,7 @@ export default function CreateRequestForm({
     initialState
   );
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [hasImages, setHasImages] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,46 +129,61 @@ export default function CreateRequestForm({
         </div>
 
         <div className="form-control">
-          <label className="label">
-            <span className="label-text">Images</span>
-          </label>
-          <div className="upload__image-wrapper">
+          <label className="label cursor-pointer">
+            <span className="label-text">Add Images?</span>
             <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              multiple
-              accept="image/*"
-              name="files"
-              className="file-input file-input-bordered w-full mb-2"
+              name="hasImages"
+              type="checkbox"
+              className="checkbox"
+              checked={hasImages}
+              onChange={(e) => setHasImages(e.target.checked)}
             />
-            {previewImages.length > 0 && (
-              <button
-                type="button"
-                onClick={removeAllImages}
-                className="btn btn-outline btn-sm mb-4"
-              >
-                Remove all images
-              </button>
-            )}
-            <div className="grid grid-cols-2 gap-4">
-              {previewImages.map((image, index) => (
-                <div key={index} className="image-item border p-2 rounded">
-                  <img src={image} alt="" className="w-full h-auto" />
-                  <div className="flex gap-2 mt-2">
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="btn btn-xs btn-outline btn-error"
-                    >
-                      Remove
-                    </button>
+          </label>
+        </div>
+
+        {hasImages && (
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Images</span>
+            </label>
+            <div className="upload__image-wrapper">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                multiple
+                accept="image/*"
+                name="files"
+                className="file-input file-input-bordered w-full mb-2"
+              />
+              {previewImages.length > 0 && (
+                <button
+                  type="button"
+                  onClick={removeAllImages}
+                  className="btn btn-outline btn-sm mb-4"
+                >
+                  Remove all images
+                </button>
+              )}
+              <div className="grid grid-cols-2 gap-4">
+                {previewImages.map((image, index) => (
+                  <div key={index} className="image-item border p-2 rounded">
+                    <img src={image} alt="" className="w-full h-auto" />
+                    <div className="flex gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="btn btn-xs btn-outline btn-error"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <button
           type="submit"
